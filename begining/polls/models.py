@@ -8,7 +8,7 @@ class Poll(models.Model):
     pub_date = models.DateTimeField('date published')
 
     def __str__(self):
-        return f'This is poll "{self.question}"'
+        return f'This is poll with "{self.question}" at date {self.pub_date}'
 
 
 class Choice(models.Model):
