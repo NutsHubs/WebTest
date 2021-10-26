@@ -3,7 +3,8 @@ from django.http import HttpResponse, HttpResponseRedirect
 from django.template import loader
 from django.db.models import F
 from django.views import generic
-from polls.models import Poll
+from django.utils import timezone
+from .models import Poll
 
 # Create your views here.
 
@@ -31,7 +32,7 @@ class IndexView(generic.ListView):
 
     def get_queryset(self):
         """Return the last published polls"""
-        return Poll.objects.all()
+        return Poll.objects.filter(pub_date__lte=timezone.now()).order_by('-pub_date')
 
     """ Old Code
 def detail(request, poll_id):
@@ -39,8 +40,13 @@ def detail(request, poll_id):
     """
 
 
-class DetailView(generic.ListView):
+class DetailView(generic.DetailView):
+    model = Poll
+    template_name = 'polls/index.html'
+    context_object_name = 'poll_one'
 
+    def get_queryset(self):
+        return Poll.objects.filter(pub_date__lte=timezone.now())
 
     """ Old Code
 def results(request, poll_id):
