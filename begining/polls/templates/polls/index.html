@@ -1,3 +1,6 @@
+{% load static %}
+
+<link rel="stylesheet" type="text/css" href="{% static 'polls/style.css' %}">
 <p>Hi</p>
 {% if polls_list %}
 <ul>
@@ -7,6 +10,7 @@
 </ul>
 
 <p>{{ request }}</p>
+
 {% elif poll_one %}
         <a href="{% url 'polls:vote' poll_one.id %}">{{ poll_one }}</a>
 {% else %}
