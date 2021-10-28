@@ -1,10 +1,10 @@
 from django.shortcuts import render, get_object_or_404, reverse
 from django.http import HttpResponse, HttpResponseRedirect
-from django.template import loader
 from django.db.models import F
 from django.views import generic
 from django.utils import timezone
 from .models import Poll
+import datetime
 
 # Create your views here.
 
@@ -78,4 +78,11 @@ def vote(request, poll_id):
         selected_choice.votes = F('votes') + 1
         selected_choice.save()
         return HttpResponseRedirect(reverse('polls:results', args=(poll.id, )))
+
+
+def events(request):
+    return HttpResponse(
+        'data: The server time is: %s\n\n' % datetime.datetime.now(),
+        content_type='text/event-stream'
+    )
 

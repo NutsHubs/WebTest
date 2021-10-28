@@ -1,4 +1,7 @@
+<!DOCTYPE html>
 {% load static %}
+<html>
+<body>
 
 <link rel="stylesheet" type="text/css" href="{% static 'polls/style.css' %}">
 <p>Hi</p>
@@ -9,10 +12,26 @@
     {% endfor %}
 </ul>
 
-<p>{{ request }}</p>
+<p>{{ request.user }}</p>
 
 {% elif poll_one %}
         <a href="{% url 'polls:vote' poll_one.id %}">{{ poll_one }}</a>
 {% else %}
     <p>No polls are available</p>
 {% endif %}
+
+<h1>Getting server updates</h1>
+<div id="result"></div>
+<script>
+    if(typeof(EventSource) !== "undefined") {
+      var source = new EventSource("events/");
+      source.onmessage = function(event) {
+        document.getElementById("result").innerHTML = event.data;
+      };
+    } else {
+      document.getElementById("result").innerHTML = "Sorry, your browser does not support server-sent events...";
+    }
+</script>
+
+</body>
+</html>
