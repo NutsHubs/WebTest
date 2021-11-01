@@ -5,6 +5,7 @@ from django.views import generic
 from django.utils import timezone
 from .models import Poll
 import datetime
+from backend.parser import parse
 
 # Create your views here.
 
