@@ -2,7 +2,6 @@ from django.contrib import admin
 from .models import Poll, Choice
 from django.db.models.signals import pre_save, pre_delete
 from django.dispatch import receiver
-from django.db import models
 
 
 class ChoiceInLane(admin.TabularInline):
