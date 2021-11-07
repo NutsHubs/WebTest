@@ -12,6 +12,8 @@ https://docs.djangoproject.com/en/3.2/ref/settings/
 
 from pathlib import Path
 
+from django.contrib import admin
+
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
@@ -39,7 +41,9 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'polls',
-    'aftn_national'
+    'aftn_national',
+    'simple_history',
+    'backend',
 ]
 
 MIDDLEWARE = [
@@ -50,6 +54,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'simple_history.middleware.HistoryRequestMiddleware'
 ]
 
 ROOT_URLCONF = 'begining.urls'
@@ -106,7 +111,7 @@ AUTH_PASSWORD_VALIDATORS = [
 # Internationalization
 # https://docs.djangoproject.com/en/3.2/topics/i18n/
 
-LANGUAGE_CODE = 'en-us'
+LANGUAGE_CODE = 'ru-ru'
 
 TIME_ZONE = 'Europe/Moscow'
 
@@ -126,3 +131,39 @@ STATIC_URL = '/static/'
 # https://docs.djangoproject.com/en/3.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+
+# set my ordering list
+ADMIN_ORDERING = [
+    ('aftn_national', [
+        'LocationIndicator',
+        'DesignatorOrg',
+        'SymbolsDepartment',
+        'Correction'
+    ]),
+]
+
+
+# Creating a sort function
+def get_app_list(self, request):
+    """
+    override the function in /django/contrib/admin/sites.py
+    it sort models in app included in custom ADMIN_ORDERING
+    """
+    app_dict = self._build_app_dict(request)
+
+    # Sort the apps alphabetically.
+    app_list = sorted(app_dict.values(), key=lambda x: x['name'].lower())
+
+    # Sort the models alphabetically within each app.
+    for app in app_list:
+        app['models'].sort(key=lambda x: x['name'])
+
+    for app_name, object_list in ADMIN_ORDERING:
+        app = app_dict[app_name]
+        app['models'].sort(key=lambda x: object_list.index(x['object_name']))
+
+    return app_list
+
+
+admin.AdminSite.get_app_list = get_app_list

@@ -1,10 +1,22 @@
 import glob
 import pprint
+from datetime import date
 from bs4 import BeautifulSoup
+
+import os
+import sys
+import django
+
+os.environ.setdefault("DJANGO_SETTINGS_MODULE", "begining.settings")
+sys.path.append('/Users/Abysscope/WebTest/begining/')
+django.setup()
+
+from aftn_national.models import Correction, LocationIndicator, DesignatorOrg, SymbolsDepartment
 
 
 def parse(path, index_page):
-    """Parse HTML page for table data"""
+    """ Parse HTML page for table data
+    """
     list_files = glob.glob(f'{path}/{index_page}_*')
 
     for file in list_files:
@@ -14,7 +26,36 @@ def parse(path, index_page):
             if len(data) == 0:
                 print(file)
                 continue
-            pprint.pprint(data, width=180)
+            populate_models(data, index_page)
+
+
+def populate_models(data, index_page):
+    pprint.pprint(data, width=180)
+
+    for fields in data:
+        if not LocationIndicator.objects.filter(national=fields[0]).exists():
+            if not fields[4] == '':
+                if not Correction.objects.filter(number=fields[4]).exists():
+                    correction_ref = Correction(number=fields[4],
+                                                date=None,
+                                                header_aftn_message=fields[6])
+                    correction_ref.save()
+                else:
+                    correction_ref = Correction.objects.get(number=fields[4])
+            else:
+                correction_ref = None
+            loc = LocationIndicator.objects.create(
+                national=fields[0],
+                international=fields[1],
+                name=fields[2],
+                district_administration=fields[3],
+                correction=correction_ref,
+                marked=fields[8],
+                excluded=fields[9]
+            )
+            loc.save()
+
+    print(LocationIndicator.objects.all())
 
 
 def _parse_soup(soup, index_page):
@@ -153,5 +194,5 @@ def _parse_table_data(td_list, index_page):
 
 
 if __name__ == '__main__':
-    parse('/Users/Abysscope/Documents/www', 5.2)
+    parse('/Users/Abysscope/Documents/www', 4)
     pass
