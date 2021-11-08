@@ -30,7 +30,14 @@ def parse(path, index_page):
 
 
 def populate_models(data, index_page):
-    pprint.pprint(data, width=180)
+    #pprint.pprint(data, width=180)
+    import aftn_national
+    model_classes = ['Correction', 'LocationIndicator', 'DesignatorOrg', 'SymbolsDepartment']
+
+    if index_page == 4:
+        target_class = getattr(aftn_national.models, model_classes[1])
+    elif index_page == 5.1:
+        target_class = getattr(aftn_national.models, model_classes[1])
 
     for fields in data:
         if not LocationIndicator.objects.filter(national=fields[0]).exists():
