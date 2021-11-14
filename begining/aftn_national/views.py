@@ -2,9 +2,21 @@ from django.http import Http404
 from django.shortcuts import render
 from django.utils.translation import gettext as _
 from django.views import generic
-
+from django.urls import reverse_lazy
 
 from .models import Correction
+from .forms import CorrectionForm
+
+
+class CorrectionCreateView(generic.CreateView):
+    template_name = 'create_form.html'
+    form_class = CorrectionForm
+    success_url = reverse_lazy('aftn_national:index')
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['entries'] = [Correction, ]
+        return context
 
 
 class IndexView(generic.ListView):
@@ -36,4 +48,5 @@ class DetailView(generic.DetailView):
 
 
 def base(request):
-    return render(request, 'base_site.html')
+
+    return render(request, 'index.html', context={})

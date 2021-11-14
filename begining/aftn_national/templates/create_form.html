@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Adding</title>
+</head>
+<body>
+    {% block breadcrumbs %}
+    <div class="breadcrumbs">
+    <a href="{% url 'aftn_national:base' %}">Основная</a>
+    {% for entry in entries %} &rsaquo; {{ entry }}{% endfor %}
+    </div>
+    {% endblock %}
+    <form method="POST">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <input type="submit" value="ADD">
+    </form>
+</body>
+</html>

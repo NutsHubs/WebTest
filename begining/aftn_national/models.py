@@ -17,6 +17,7 @@ class UpperCharField(models.CharField):
 
 class Correction(models.Model):
     number = models.IntegerField(verbose_name='Номер',
+                                 unique=True,
                                  blank=True)
     date = models.DateField(verbose_name='Дата поправки',
                             blank=True,
@@ -42,12 +43,10 @@ class Correction(models.Model):
             string_result = f'Поправка №{self.number} от {self.date:%d.%m.%Y}'
         return string_result
 
-    def slug(self):
-        return slugify(self.number)
-
     class Meta:
         verbose_name = 'Поправка'
         verbose_name_plural = 'Поправки'
+        ordering = ['-number']
 
     @property
     @admin.display(ordering='number', description='Поправка')
@@ -95,6 +94,7 @@ class LocationIndicator(models.Model):
     class Meta:
         verbose_name = 'Обозначение местоположения'
         verbose_name_plural = 'Обозначение местоположения'
+        ordering = ['national']
 
 
 class DesignatorOrg(models.Model):
@@ -130,6 +130,7 @@ class DesignatorOrg(models.Model):
     class Meta:
         verbose_name = 'Обозначение служб или предприятий'
         verbose_name_plural = 'Обозначение служб или предприятий'
+        ordering = ['national']
 
 
 class SymbolsDepartment(models.Model):
@@ -158,3 +159,4 @@ class SymbolsDepartment(models.Model):
     class Meta:
         verbose_name = 'Обозначение подразделений'
         verbose_name_plural = 'Обозначение подразделений'
+        ordering = ['national']
