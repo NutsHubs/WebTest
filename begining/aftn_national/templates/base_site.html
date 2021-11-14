@@ -1,0 +1,9 @@
+{% extends "base.html" %}
+
+{% block title %}{% if subtitle %}{{ subtitle }} | {% endif %}{{ title }} | {{ site_title|default:_('Сборник телеграфных индексов') }}{% endblock %}
+
+{% block branding %}
+<h1 id="site-name"><a href="{% url 'aftn_national:base' %}">{{ site_header|default:_('Сборник телеграфных индексов') }}</a></h1>
+{% endblock %}
+
+{% block nav-global %}{% endblock %}

@@ -1,6 +1,7 @@
 from django.db import models
 from django.contrib import admin
 from django.core.validators import RegexValidator
+from django.template.defaultfilters import slugify
 
 from simple_history.models import HistoricalRecords
 # from aftn_national.custommodels import UpperCharField
@@ -40,6 +41,9 @@ class Correction(models.Model):
         else:
             string_result = f'Поправка №{self.number} от {self.date:%d.%m.%Y}'
         return string_result
+
+    def slug(self):
+        return slugify(self.number)
 
     class Meta:
         verbose_name = 'Поправка'
