@@ -28,7 +28,8 @@ SECRET_KEY = 'django-insecure-65ee50_oyiidggjonlijotz$hy-@()4gf+bp_5k+!s5zos@2&y
 DEBUG = True
 
 ALLOWED_HOSTS = ['127.0.0.1', '.localhost',
-                 '192.168.50.191', ]
+                 '192.168.50.191',
+                 '172.20.30.57', ]
 
 
 # Application definition
@@ -160,8 +161,9 @@ def get_app_list(self, request):
         app['models'].sort(key=lambda x: x['name'])
 
     for app_name, object_list in ADMIN_ORDERING:
-        app = app_dict[app_name]
-        app['models'].sort(key=lambda x: object_list.index(x['object_name']))
+        if app_dict:
+            app = app_dict[app_name]
+            app['models'].sort(key=lambda x: object_list.index(x['object_name']))
 
     return app_list
 

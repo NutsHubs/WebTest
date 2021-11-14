@@ -1,5 +1,6 @@
 import glob
 import pprint
+import re
 from datetime import date
 from bs4 import BeautifulSoup
 
@@ -10,8 +11,6 @@ import django
 os.environ.setdefault("DJANGO_SETTINGS_MODULE", "begining.settings")
 sys.path.append('/Users/Abysscope/WebTest/begining/')
 django.setup()
-
-from aftn_national.models import Correction, LocationIndicator, DesignatorOrg, SymbolsDepartment
 
 
 def parse(path, index_page):
@@ -30,39 +29,71 @@ def parse(path, index_page):
 
 
 def populate_models(data, index_page):
-    #pprint.pprint(data, width=180)
+    # pprint.pprint(data, width=180)
     import aftn_national
     model_classes = ['Correction', 'LocationIndicator', 'DesignatorOrg', 'SymbolsDepartment']
 
     if index_page == 4:
         target_class = getattr(aftn_national.models, model_classes[1])
     elif index_page == 5.1:
-        target_class = getattr(aftn_national.models, model_classes[1])
+        target_class = getattr(aftn_national.models, model_classes[2])
+    elif index_page == 5.2:
+        target_class = getattr(aftn_national.models, model_classes[3])
+    else:
+        return False
+
+    correction_class = getattr(aftn_national.models, model_classes[0])
+    location_class = getattr(aftn_national.models, model_classes[1])
+    list_error = []
 
     for fields in data:
-        if not LocationIndicator.objects.filter(national=fields[0]).exists():
-            if not fields[4] == '':
-                if not Correction.objects.filter(number=fields[4]).exists():
-                    correction_ref = Correction(number=fields[4],
-                                                date=None,
-                                                header_aftn_message=fields[6])
-                    correction_ref.save()
-                else:
-                    correction_ref = Correction.objects.get(number=fields[4])
-            else:
+        if not (fields[0] == '' or target_class.objects.filter(national=fields[0]).exists()):
+            length = len(fields)
+            corr_number = fields[length - 6]
+            if corr_number == '':
                 correction_ref = None
-            loc = LocationIndicator.objects.create(
-                national=fields[0],
-                international=fields[1],
-                name=fields[2],
-                district_administration=fields[3],
-                correction=correction_ref,
-                marked=fields[8],
-                excluded=fields[9]
-            )
-            loc.save()
+            else:
+                if correction_class.objects.filter(number=corr_number).exists():
+                    correction_ref = correction_class.objects.get(number=corr_number)
+                else:
+                    correction_ref = correction_class(number=int(corr_number),
+                                                      date=None,
+                                                      header_aftn_message=fields[length - 4])
+                    correction_ref.save()
 
-    print(LocationIndicator.objects.all())
+            fields_dict = {'national': fields[0],
+                           'correction': correction_ref,
+                           'marked': fields[length - 2],
+                           'excluded': fields[length - 1]}
+
+            if index_page == 4 or index_page == 5.1:
+                fields_dict['international'] = fields[1]
+                fields_dict['name'] = fields[2]
+                if index_page == 4:
+                    fields_dict['district_administration'] = fields[3]
+                else:  # index_page = 5.1
+                    if fields[3] == '':
+                        location_ref = None
+                    elif location_class.objects.filter(national=fields[3]).exists():
+                        location_ref = location_class.objects.get(national=fields[3])
+                    else:
+                        location_ref = None
+                        list_error.append(f'Unknown national\nFields: {fields}\n Index page: {index_page}\n\n')
+                    fields_dict['location'] = location_ref
+            elif index_page == 5.2:
+                fields_dict['name'] = fields[1]
+            else:
+                return False
+
+            row_create = target_class.objects.create(**fields_dict)
+            row_create.save()
+        else:  # not exists or repeat 'national' in target class
+            list_error.append(f'Not exists or repeat national\nFields: {fields}\n Index page: {index_page}\n\n')
+
+    with open('error.txt', 'a') as wr:
+        for string in list_error:
+            wr.write(string)
+    #pprint.pprint(target_class.objects.all())
 
 
 def _parse_soup(soup, index_page):
@@ -115,15 +146,13 @@ def _parse_rows(tr_list, index_page):
                 national = national.replace('*', '')
                 marked = True
 
-            if correction != '':
-                split_corr = correction.split(' ')
-                if len(split_corr) < 3:
-                    correction_number = split_corr[len(split_corr) - 2]
-                    correction = f'{split_corr[len(split_corr) - 1][:6]} {split_corr[len(split_corr) - 1][6:]}'
-                else:
-                    correction_number = split_corr[len(split_corr) - 3]
-                    correction = f'{split_corr[len(split_corr) - 2]} {split_corr[len(split_corr) - 1]}'
-                correction_number = correction_number.replace('№', '')
+            regex = re.compile(r'\W+(\d+) (\d{6}) (\S{8})')
+            match_groups = regex.fullmatch(correction)
+            if match_groups is not None:
+                correction_number = match_groups.group(1)
+                correction = f'{match_groups.group(2)} {match_groups.group(3)}'
+            else:
+                correction = str()
 
             if index_page == 4 or index_page == 6:
                 td_data.append([national,
@@ -201,5 +230,5 @@ def _parse_table_data(td_list, index_page):
 
 
 if __name__ == '__main__':
-    parse('/Users/Abysscope/Documents/www', 4)
+    parse('/Users/Abysscope/Documents/www', 5.2)
     pass

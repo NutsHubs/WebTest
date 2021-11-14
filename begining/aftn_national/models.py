@@ -3,8 +3,7 @@ from django.contrib import admin
 from django.core.validators import RegexValidator
 
 from simple_history.models import HistoricalRecords
-
-#from aftn_national.custommodels import UpperCharField
+# from aftn_national.custommodels import UpperCharField
 
 
 class UpperCharField(models.CharField):
@@ -106,8 +105,7 @@ class DesignatorOrg(models.Model):
                                    validators=[RegexValidator(
                                        regex=r'[a-zA-Z]{3}',
                                        message='Требуется 3 символа на латинице')],
-                                   blank=True,
-                                   unique=True)
+                                   blank=True)
     name = models.CharField(verbose_name='Наименование предприятия',
                             max_length=200)
     location = models.ForeignKey(LocationIndicator, models.SET_NULL,
@@ -156,4 +154,3 @@ class SymbolsDepartment(models.Model):
     class Meta:
         verbose_name = 'Обозначение подразделений'
         verbose_name_plural = 'Обозначение подразделений'
-

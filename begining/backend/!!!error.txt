@@ -1,0 +1,132 @@
+Not exists or repeat national
+Fields: ['УУЕХ', '', 'Шевлино', 'ОУ ВТ ЦР', '466', None, '120900 УУУУЯСДТ', '', True, True]
+ Index page: 4
+
+Not exists or repeat national
+Fields: ['УЛКС', '', 'Савватия', 'СЗ  ОУ  ВТ', '434', None, '300815 УУУУЯСДТ', '', True, True]
+ Index page: 4
+
+Not exists or repeat national
+Fields: ['УРФБ', '', 'Бельбек', 'ЮЖН ОУ ВТ', '543', None, '200800 УУУУЯСДТ', '', False, False]
+ Index page: 4
+
+Not exists or repeat national
+Fields: ['УУТГ', '', 'Большая волга', 'ОУ ВТ ЦР', '593', None, '301232 УУУУЯСДТ', '', True, False]
+ Index page: 4
+
+Not exists or repeat national
+Fields: ['УСТЙ', '', 'Тобольск/Новая', 'УР ОУ ВТ', '596', None, '121150 УУУУЯСДТ', '', False, True]
+ Index page: 4
+
+Not exists or repeat national
+Fields: ['УСТЙ', '', 'Тобольск/Ремезов', 'УРОУ ВТ', '596', None, '121150 УУУУЯСДТ', '', False, False]
+ Index page: 4
+
+Unknown national
+Fields: ['ИНЖ', '', 'Инверсия, а/к Латвийской республики', 'Рига', '539', None, '040900 УУУУЯСДТ', '', False, True]
+ Index page: 5.1
+
+Unknown national
+Fields: ['ИИ', '', 'Информационные сети Украины, СП  при Киевском ЦЭРТОС', 'УККУ', '539', None, '040900 УУУУЯСДТ', '', False, True]
+ Index page: 5.1
+
+Unknown national
+Fields: ['ХЕ', '', 'Контект, агентство воздушных сообщений', 'Тбилиси', '539', None, '040900 УУУУЯСДТ', '', False, True]
+ Index page: 5.1
+
+Unknown national
+Fields: ['УК', '', 'Кыргызстан, а/к', 'УАФФ', '539', None, '040900 УУУУЯСДТ', '', False, True]
+ Index page: 5.1
+
+Unknown national
+Fields: ['УВ', '', 'Вертранс, а/к', 'УАФФ', '544', None, '100900 УУУУЯСДТ', '', False, True]
+ Index page: 5.1
+
+Not exists or repeat national
+Fields: ['АЖ', '', 'Абрахам технолоджи, ООО', 'УУУУ', '583', None, '051345 УУУУЯСДТ', '', False, False]
+ Index page: 5.1
+
+Unknown national
+Fields: ['УКР', '', 'Авиакомпания "Авиалинии Украины"', 'УККК', '539', None, '040900 УУУУЯСДТ', '', False, True]
+ Index page: 5.1
+
+Not exists or repeat national
+Fields: ['ЛЙ', '', 'Авиакомпания "Лукиавиатранс", ООО', 'УЛОО', '579', None, '011145 УУУУЯСДТ', '', False, False]
+ Index page: 5.1
+
+Unknown national
+Fields: ['ХТ', '', 'Авиакомпания "Трансавиасервис"', 'Кутаиси', '539', None, '040900 УУУУЯСДТ', '', False, True]
+ Index page: 5.1
+
+Unknown national
+Fields: ['ТЬЦ', '', 'Авиакомпания "Трансавиаэкспорт"', 'Минск', '539', None, '040900 УУУУЯСДТ', '', False, True]
+ Index page: 5.1
+
+Not exists or repeat national
+Fields: ['ХД', '', 'Авиакомпания "Черномор-Союз"', 'УРСС', '562', None, '300800 УУУУЯСДТ', '', False, True]
+ Index page: 5.1
+
+Not exists or repeat national
+Fields: ['БЗ', '', 'Авиакомпания Баргузин, ДЗАО', 'УИУУ', '', None, '', '', True, False]
+ Index page: 5.1
+
+Not exists or repeat national
+Fields: ['ВМ', '', 'Авиакомпания аэро-сервис ЛТД, СП', 'УУБЦ', '562', None, '300800 УУУУЯСДУ', '', False, True]
+ Index page: 5.1
+
+Not exists or repeat national
+Fields: ['ГБ', '', 'Авиакомпания"Югорскавиа"', 'УСХС', '562', None, '300800 УУУУЯСДТ', '', False, True]
+ Index page: 5.1
+
+Unknown national
+Fields: ['ГГ', '', 'Авиаэкспресскруиз, а/к', 'Тбилиси', '539', None, '040900 УУУУЯСДТ', '', False, True]
+ Index page: 5.1
+
+Not exists or repeat national
+Fields: ['АН', '', 'Аэро-Транзит, ООО', 'УНКС', '383', None, '130815 УУУУЯСДУ', '', False, True]
+ Index page: 5.1
+
+Unknown national
+Fields: ['ИА', '', 'Аэролизинг-Советский Союз, СП при Украинском объединении ГА', 'УККК', '539', None, '040900 УУУУЯСДТ', '', False, True]
+ Index page: 5.1
+
+Not exists or repeat national
+Fields: ['АУЛ', 'AUL исключ', 'Аэрофлот-Норд, ЗАО', 'УЛАА', '588', None, '240740 УУУУЯСДТ', '', False, False]
+ Index page: 5.1
+
+Not exists or repeat national
+Fields: ['ЙЯ', '', 'Беркут, АНО АТСК РОСТО', 'УУУУ', '491', None, '180900 УУУУЯСДТ', '', True, True]
+ Index page: 5.1
+
+Not exists or repeat national
+Fields: ['БГМ', 'BGM', 'Бугульминское авиапредприятие, ОАО', 'УВКБ(исключен)', '411', None, '051230 УУУУЯСДТ', '', False, False]
+ Index page: 5.1
+
+Not exists or repeat national
+Fields: ['ЙР', '', 'Тин эйр, а/к', 'УРВВ', '562', None, '300800 УУУУЯСДТ', '', False, True]
+ Index page: 5.1
+
+Unknown national
+Fields: ['ТЙК', '', 'ГАРТ ""Точикистон"", Государственная авиакомпания', 'Таджикистан', '539', None, '040900 УУУУЯСДТ', '', False, True]
+ Index page: 5.1
+
+Not exists or repeat national
+Fields: ['ГУ', '', 'Пионер-региональные авиалинии, ООО', 'УРРР', '575', None, '020920 УУУУЯСДТ', '', True, False]
+ Index page: 5.1
+
+Not exists or repeat national
+Fields: ['ИЛЕ', 'ILE', 'Джет Порт Юг, ООО', 'УРСС', '389', None, '190810 УУУУЯСДТ', '', False, False]
+ Index page: 5.1
+
+Unknown national
+Fields: ['САХ', '', 'Саяхат, Гос. Кооп. Авиафирма', 'Алма-Ата', '539', None, '040900 УУУУЯСДТ', '', False, True]
+ Index page: 5.1
+
+Not exists or repeat national
+Fields: ['ЙФ', '', 'Шонкар, а/к', 'УВУУ', '562', None, '300800 УУУУЯСДТ', '', False, True]
+ Index page: 5.1
+
+Not exists or repeat national
+Fields: ['', 'MTL', 'РАФ-Авиа, авиаотряд', 'Рига', '', None, '', '', False, False]
+ Index page: 5.1
+
