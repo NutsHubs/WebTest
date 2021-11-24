@@ -7,6 +7,8 @@ from django.urls import reverse_lazy
 from .models import Correction
 from .forms import CorrectionForm
 
+from backend.main import get_results
+
 
 class CorrectionCreateView(generic.CreateView):
     template_name = 'create_form.html'
@@ -50,3 +52,18 @@ class DetailView(generic.DetailView):
 def base(request):
     print(request.get_host())
     return render(request, 'index.html', context={})
+
+
+def main(request):
+    q = ''
+    results = None
+    if request.method == 'GET':
+        if 'q' in request.GET:
+            q = request.GET["q"]
+            results = get_results(q)
+
+    return render(request, 'index.html', {
+        'search': q,
+        'results': results
+    })
+

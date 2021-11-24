@@ -98,13 +98,13 @@ input[type="submit"], button {
         padding: 15px;
     }
 
-    #changelist-search > div {
+    #search-content > div {
         display: flex;
         flex-wrap: nowrap;
         max-width: 480px;
     }
 
-    #changelist-search label {
+    #search-content label {
         line-height: 22px;
     }
 
@@ -119,7 +119,7 @@ input[type="submit"], button {
         flex: 0 1 auto;
     }
 
-    #changelist-search .quiet {
+    #search-content .quiet {
         width: 0;
         flex: 1 0 auto;
         margin: 5px 0 0 25px;

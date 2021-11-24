@@ -59,7 +59,7 @@
     <!-- END Header -->
     {% block breadcrumbs %}
     <div class="breadcrumbs">
-    <a href="{% url 'aftn_national:base' %}">Основная</a>
+    <a href="{% url 'aftn_national:main' %}">Основная</a>
     {% if title %} &rsaquo; {{ title }}{% endif %}
     </div>
     {% endblock %}
@@ -80,7 +80,7 @@
           {% endif %}
         {% endblock messages %}
         <!-- Content -->
-        <div id="content" class="{% block coltype %}colM{% endblock %}">
+        <div id="content">
           {% block pretitle %}{% endblock %}
           {% block content_title %}{% if title %}<h1>{{ title }}</h1>{% endif %}{% endblock %}
           {% block content_subtitle %}{% if subtitle %}<h2>{{ subtitle }}</h2>{% endif %}{% endblock %}
