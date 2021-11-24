@@ -230,5 +230,5 @@ def _parse_table_data(td_list, index_page):
 
 
 if __name__ == '__main__':
-    parse('/Users/Abysscope/Documents/www', 5.2)
+    parse('/Users/Abysscope/Documents/www/indexes', 5.2)
     pass

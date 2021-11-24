@@ -64,6 +64,17 @@ class ResultView(generic.DetailView):
 
 def vote(request, poll_id):
     poll = get_object_or_404(Poll, pk=poll_id)
+
+    if request.method == 'GET':
+        if 'q' in request.GET:
+            q = request.GET["q"]
+        else:
+            q = ''
+        return render(request, 'polls/vote.html', {
+            'poll': poll,
+            'result': q
+        })
+
     i = 0
     try:
         sc = request.POST['choice']

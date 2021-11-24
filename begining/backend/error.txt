@@ -1,0 +1,4 @@
+Not exists or repeat national
+Fields: ['', 'УЕБЙ*', 'Вьюн', 'ДВ ОУ ВТ', '579', None, '011145 УУУУЯСДТ', '', False, False]
+ Index page: 4
+

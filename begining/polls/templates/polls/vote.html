@@ -12,3 +12,16 @@
     </fieldset>
     <input type="submit" value="Vote">
 </form>
+<div class="content">
+    <div class="module" id="query">
+    <form id="test" method="get">
+        <div>
+            <input type="text" name="q" id="search" value="{{ result }}" autofocus>
+            <input type="submit" value="Search">
+        </div>
+    </form>
+    </div>
+    <div class="results">
+        Your query: {{ result }}
+    </div>
+</div>

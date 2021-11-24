@@ -48,5 +48,5 @@ class DetailView(generic.DetailView):
 
 
 def base(request):
-
+    print(request.get_host())
     return render(request, 'index.html', context={})
