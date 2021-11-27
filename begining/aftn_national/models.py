@@ -88,6 +88,9 @@ class LocationIndicator(models.Model):
                                    default=False)
     history = HistoricalRecords()
 
+    def __repr__(self):
+        return f'<Location {self.national}>'
+
     def __str__(self):
         return f'{self.national}'
 

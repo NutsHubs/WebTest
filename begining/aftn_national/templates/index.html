@@ -14,8 +14,8 @@
 {% block content %}
 <div id="content-main">
   <div id="search-content" align="center">
-      <h1>Поиск по буквенному обозначению по всему сборнику</h1>
-      <div style="background-color:#212121" id="toolbar">
+      <h1 style="padding:10px;margin:0px">Поиск по буквенному обозначению по всему сборнику</h1>
+      <div style="background-color:#212121; margin-bottom:15px" id="toolbar">
           <form id="list-search" method="get">
               <div align="center">
                 <input type="text" name="q" id="search" value="{{ search }}" autofocus>
@@ -24,14 +24,20 @@
           </form>
       </div>
       <div class="results">
-        <table id="result-list">
-            {% for result in results %}
-            <tr>
-                <td>{{ result.national }}</td>
-                <td>{{ result.name }}</td>
-            </tr>
-            {% endfor %}
-        </table>
+          {% for key,values in results.items %}
+          {% if values %}
+          <h2 style="margin-top:15px"><b>{{ key }}</b></h2>
+          <table id="result-list" style="width:100%">
+              {% for value in values %}
+              <tr>
+                  <td style="width:80px">{{ value.national }}</td>
+                  <td style="width:80px">{{ value.international }}</td>
+                  <td>{{ value.name }}</td>
+              </tr>
+          {% endfor %}
+          </table>
+          {% endif %}
+          {% endfor %}
       </div>
   </div>
 </div>
