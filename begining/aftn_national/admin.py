@@ -67,6 +67,7 @@ class DesignatorOrgHistoryAdmin(SimpleHistoryAdmin):
     search_fields = ('national',)
     list_display = ('national',
                     'international',
+                    'location',
                     'name',
                     'correction',
                     'marked',
@@ -77,7 +78,6 @@ class DesignatorOrgHistoryAdmin(SimpleHistoryAdmin):
             request, queryset, search_term,
         )
         if not queryset:
-            print(queryset)
             queryset |= self.model.objects.filter(
                 Q(national=search_term))
 

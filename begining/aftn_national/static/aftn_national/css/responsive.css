@@ -99,7 +99,7 @@ input[type="submit"], button {
     }
 
     #search-content > div {
-        display: flex;
+        /* display: flex; */
         flex-wrap: nowrap;
         max-width: 480px;
     }

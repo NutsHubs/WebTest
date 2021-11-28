@@ -56,14 +56,16 @@ def base(request):
 
 def main(request):
     q = ''
-    results = None
+    results_query = None
+    results_headers = None
     if request.method == 'GET':
         if 'q' in request.GET:
             q = request.GET["q"]
-            results = get_results(q)
+            results_query, results_headers = get_results(q)
 
     return render(request, 'index.html', {
         'search': q,
-        'results': results
+        'results': results_query,
+        'results_headers': results_headers
     })
 
