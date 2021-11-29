@@ -20,9 +20,9 @@ def get_results(query):
     for c in ['X', 'Ь', '*']:
         query = query.replace(c, '.')
 
-    if re.search(r'^[a-zA-Z]+', query):
+    if re.search(r'^[a-zA-Z.]+', query):
         field = 'international'
-    elif re.search(r'^[а-яА-Я]+', query):
+    elif re.search(r'^[а-яА-Я.]+', query):
         field = 'national'
     else:
         return None
@@ -30,7 +30,7 @@ def get_results(query):
     organization_query = None
     department_query = None
     if len(query) > 4:
-        location_query = location.objects.filter(national__regex=r'{}'.format(query[:4]))
+        location_query = location.objects.filter(national__regex=r'^{}$'.format(query[:4]))
         if len(query) > 5:
             organization_query = organization.objects.filter(national__regex=r'^{}$'.format(query[4:6]))
         if len(query) > 6:
@@ -77,4 +77,4 @@ def get_item(dict, key):
 
 
 if __name__ == '__main__':
-    print(get_results('ЛXsd*ил'))
+    print(get_results('ьльь'))
