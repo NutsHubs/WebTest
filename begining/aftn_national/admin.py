@@ -54,7 +54,6 @@ class LocationIndicatorHistoryAdmin(SimpleHistoryAdmin):
             request, queryset, search_term,
         )
         if not queryset:
-            print(queryset)
             queryset |= self.model.objects.filter(
                 Q(national=search_term) |
                 Q(international=search_term))
@@ -98,7 +97,6 @@ class SymbolsDepartmentHistoryAdmin(SimpleHistoryAdmin):
             request, queryset, search_term,
         )
         if not queryset:
-            print(queryset)
             queryset |= self.model.objects.filter(
                 Q(national=search_term))
 

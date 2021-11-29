@@ -28,7 +28,7 @@ class Correction(models.Model):
                                              regex=r'[0-9]{6} \S{8}',
                                              message='Некоректная строка отправителя')],
                                          blank=True)
-    aftn_message = models.CharField(verbose_name='Содержание поправки',
+    aftn_message = models.TextField(verbose_name='Содержание поправки',
                                     max_length=1800,
                                     blank=True)
     history = HistoricalRecords()
