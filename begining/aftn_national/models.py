@@ -62,6 +62,17 @@ class Correction(models.Model):
 
 
 class LocationIndicator(models.Model):
+    DISTRICT = [
+        ('ОУ ВТ ЦР', 'ОУ ВТ ЦР'),
+        ('ЮЖН ОУ ВТ', 'ЮЖН ОУ ВТ'),
+        ('ДВ ОУ ВТ', 'ДВ ОУ ВТ'),
+        ('СЗ ОУ ВТ', 'СЗ ОУ ВТ'),
+        ('ПРИВ ОУ ВТ', 'ПРИВ ОУ ВТ'),
+        ('СИБ ОУ ВТ', 'СИБ ОУ ВТ'),
+        ('УР ОУ ВТ', 'УР ОУ ВТ'),
+        ('ФАВТ', 'ФАВТ'),
+        ('----', '----')
+    ]
     national = UpperCharField(verbose_name='Обозначение национальное',
                               max_length=4,
                               validators=[RegexValidator(
@@ -78,7 +89,9 @@ class LocationIndicator(models.Model):
                             max_length=200,
                             blank=True)
     district_administration = models.CharField(verbose_name='Окружное управление ВТ',
-                                               max_length=200)
+                                               max_length=10,
+                                               choices=DISTRICT,
+                                               default='----',)
     correction = models.ForeignKey(Correction, models.SET_NULL,
                                    verbose_name='Поправка',
                                    blank=True, null=True)

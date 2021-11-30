@@ -25,7 +25,7 @@ def get_results(query):
     elif re.search(r'^[а-яА-Я.]+', query):
         field = 'national'
     else:
-        return None
+        pass
 
     organization_query = None
     department_query = None
@@ -39,8 +39,8 @@ def get_results(query):
             department_query = department.objects.filter(national__regex=r'^{}$'.format(query[6:8]))
     else:
         location_query = location.objects.filter(national__regex=r'^{}$'.format(query))
-        organization_query = organization.objects.filter(national__contains=query)
-        department_query = department.objects.filter(national__contains=query)
+        organization_query = organization.objects.filter(national__regex=r'^{}$'.format(query))
+        department_query = department.objects.filter(national__regex=r'^{}$'.format(query))
 
     not_found = "Буквенное обозначение не найдено"
     result_query = {'Обозначения местоположения (раздел 4)': location_query or [{'name': not_found}],
@@ -78,4 +78,4 @@ def get_item(dict, key):
 
 
 if __name__ == '__main__':
-    print(get_results('улыыыыыы'))
+    print(get_results('xxxx'))

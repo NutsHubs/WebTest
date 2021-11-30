@@ -6,14 +6,17 @@ from .models import Correction, LocationIndicator, DesignatorOrg, SymbolsDepartm
 
 class LocationInLine(admin.TabularInline):
     model = LocationIndicator
+    extra = 1
 
 
 class DesignatorInLine(admin.TabularInline):
     model = DesignatorOrg
+    extra = 1
 
 
 class SymbolsDepartmentInLine(admin.TabularInline):
     model = SymbolsDepartment
+    extra = 1
 
 
 class CorrectionHistoryAdmin(SimpleHistoryAdmin):
@@ -45,6 +48,7 @@ class LocationIndicatorHistoryAdmin(SimpleHistoryAdmin):
     list_display = ('national',
                     'international',
                     'name',
+                    'district_administration',
                     'correction',
                     'marked',
                     'excluded')

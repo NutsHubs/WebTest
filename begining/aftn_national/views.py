@@ -66,6 +66,7 @@ def main(request):
     return render(request, 'index.html', {
         'search': q,
         'results': results_query,
-        'results_headers': results_headers
+        'results_headers': results_headers,
     })
+
 
