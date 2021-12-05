@@ -4,6 +4,8 @@ from django.db.models import Q
 from simple_history.admin import SimpleHistoryAdmin
 from .models import Correction, LocationIndicator, DesignatorOrg, SymbolsDepartment, ServerDB
 
+from backend.remotedb import request_db
+
 
 class LocationInLine(admin.TabularInline):
     model = LocationIndicator
@@ -46,6 +48,8 @@ class CorrectionHistoryAdmin(SimpleHistoryAdmin):
     @admin.action(description='Заполнить текст поправок из телеграммы с указанным адресом отправителя')
     def request_message(self, request, queryset):
         self.message_user(request, 'OK', messages.ERROR)
+        for query in queryset:
+            request_db(f'{query.header_aftn_message}')
         pass
 
 

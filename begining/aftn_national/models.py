@@ -192,6 +192,9 @@ class ServerDB(models.Model):
                                         protocol='IPv4')
     port = models.IntegerField(verbose_name='Connection port number',)
 
+    def __str__(self):
+        return f'Server {self.host}'
+
     class Meta:
         verbose_name = 'Server CKS'
         verbose_name_plural = 'Servers CKS'
