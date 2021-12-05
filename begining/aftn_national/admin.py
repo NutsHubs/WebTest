@@ -1,4 +1,5 @@
 from django.contrib import admin
+from django.contrib import messages
 from django.db.models import Q
 from simple_history.admin import SimpleHistoryAdmin
 from .models import Correction, LocationIndicator, DesignatorOrg, SymbolsDepartment
@@ -25,6 +26,7 @@ class CorrectionHistoryAdmin(SimpleHistoryAdmin):
     search_fields = ['number']
     history_list_display = ['wrap_correction', 'date', 'header_aftn_message']
     list_display = ('title_correction', 'header_aftn_message',)
+    actions = ['request_message']
     """inlines = [LocationInLine,
                DesignatorInLine,
                SymbolsDepartmentInLine]"""
@@ -40,6 +42,11 @@ class CorrectionHistoryAdmin(SimpleHistoryAdmin):
         else:
             string_result = f'Поправка №{obj.number} от {obj.date:%d.%m.%Y}'
         return string_result
+
+    @admin.action(description='Заполнить текст поправок из телеграммы с указанным адресом отправителя')
+    def request_message(self, request, queryset):
+        self.message_user(request, 'OK', messages.ERROR)
+        pass
 
 
 class LocationIndicatorHistoryAdmin(SimpleHistoryAdmin):
