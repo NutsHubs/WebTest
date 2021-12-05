@@ -27,12 +27,13 @@ class CorrectionHistoryAdmin(SimpleHistoryAdmin):
     ordering = ['-number']
     search_fields = ['number']
     history_list_display = ['wrap_correction', 'date', 'header_aftn_message']
-    list_display = ('title_correction', 'header_aftn_message',)
+    list_display = ('title_correction', 'header_aftn_message', 'is_text')
     actions = ['request_message']
     """inlines = [LocationInLine,
                DesignatorInLine,
                SymbolsDepartmentInLine]"""
     #fields = (('number', 'date'), 'header_aftn_message',)
+
     @admin.display(ordering='number', description='Поправка')
     def wrap_correction(self, obj):
         string_result = ''
@@ -44,6 +45,13 @@ class CorrectionHistoryAdmin(SimpleHistoryAdmin):
         else:
             string_result = f'Поправка №{obj.number} от {obj.date:%d.%m.%Y}'
         return string_result
+
+    @admin.display(description='Текст поправки', boolean=True)
+    def is_text(self, obj):
+        if obj.aftn_message == '':
+            return False
+        else:
+            return True
 
     @admin.action(description='Заполнить текст поправок из телеграммы с указанным адресом отправителя')
     def request_message(self, request, queryset):
