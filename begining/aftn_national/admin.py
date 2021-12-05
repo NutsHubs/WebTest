@@ -2,7 +2,7 @@ from django.contrib import admin
 from django.contrib import messages
 from django.db.models import Q
 from simple_history.admin import SimpleHistoryAdmin
-from .models import Correction, LocationIndicator, DesignatorOrg, SymbolsDepartment
+from .models import Correction, LocationIndicator, DesignatorOrg, SymbolsDepartment, ServerDB
 
 
 class LocationInLine(admin.TabularInline):
@@ -122,7 +122,12 @@ class SymbolsDepartmentHistoryAdmin(SimpleHistoryAdmin):
         return string_result
 
 
+class ServerDBAdmin(admin.ModelAdmin):
+    pass
+
+
 admin.site.register(Correction, CorrectionHistoryAdmin)
 admin.site.register(LocationIndicator, LocationIndicatorHistoryAdmin)
 admin.site.register(DesignatorOrg, DesignatorOrgHistoryAdmin)
 admin.site.register(SymbolsDepartment, SymbolsDepartmentHistoryAdmin)
+admin.site.register(ServerDB, ServerDBAdmin)

@@ -179,3 +179,19 @@ class SymbolsDepartment(models.Model):
         verbose_name = 'Обозначение подразделений'
         verbose_name_plural = 'Обозначение подразделений'
         ordering = ['national']
+
+
+class ServerDB(models.Model):
+    dbname = models.CharField(verbose_name='Database name',
+                              max_length=50)
+    user = models.CharField(verbose_name='User name used to authenticate',
+                            max_length=50)
+    password = models.CharField(verbose_name='Password used to authenticate',
+                                max_length=50)
+    host = models.GenericIPAddressField(verbose_name='Database host address',
+                                        protocol='IPv4')
+    port = models.IntegerField(verbose_name='Connection port number',)
+
+    class Meta:
+        verbose_name = 'Server CKS'
+        verbose_name_plural = 'Servers CKS'

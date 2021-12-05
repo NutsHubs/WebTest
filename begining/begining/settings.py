@@ -140,7 +140,8 @@ ADMIN_ORDERING = [
         'LocationIndicator',
         'DesignatorOrg',
         'SymbolsDepartment',
-        'Correction'
+        'Correction',
+        'ServerDB'
     ]),
 ]
 
