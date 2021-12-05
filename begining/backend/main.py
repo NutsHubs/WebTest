@@ -78,4 +78,4 @@ def get_item(dict, key):
 
 
 if __name__ == '__main__':
-    print(get_results('xxxx'))
+    print(get_results('xx'))

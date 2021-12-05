@@ -4,6 +4,8 @@ from django.core.validators import RegexValidator
 from django.template.defaultfilters import slugify
 
 from simple_history.models import HistoricalRecords
+
+
 # from aftn_national.custommodels import UpperCharField
 
 
@@ -91,7 +93,7 @@ class LocationIndicator(models.Model):
     district_administration = models.CharField(verbose_name='Окружное управление ВТ',
                                                max_length=10,
                                                choices=DISTRICT,
-                                               default='----',)
+                                               default='----', )
     correction = models.ForeignKey(Correction, models.SET_NULL,
                                    verbose_name='Поправка',
                                    blank=True, null=True)
@@ -162,7 +164,8 @@ class SymbolsDepartment(models.Model):
     correction = models.ForeignKey(Correction,
                                    models.SET_NULL,
                                    verbose_name='Поправка',
-                                   blank=True, null=True)
+                                   blank=True,
+                                   null=True)
     marked = models.BooleanField(verbose_name='Помечен на удаление',
                                  default=False)
     excluded = models.BooleanField(verbose_name='Исключен',

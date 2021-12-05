@@ -7,6 +7,7 @@ from .models import Correction, LocationIndicator, DesignatorOrg, SymbolsDepartm
 class LocationInLine(admin.TabularInline):
     model = LocationIndicator
     extra = 1
+    list_display_link = ('national',)
 
 
 class DesignatorInLine(admin.TabularInline):
@@ -24,9 +25,9 @@ class CorrectionHistoryAdmin(SimpleHistoryAdmin):
     search_fields = ['number']
     history_list_display = ['wrap_correction', 'date', 'header_aftn_message']
     list_display = ('title_correction', 'header_aftn_message',)
-    inlines = [LocationInLine,
+    """inlines = [LocationInLine,
                DesignatorInLine,
-               SymbolsDepartmentInLine]
+               SymbolsDepartmentInLine]"""
     #fields = (('number', 'date'), 'header_aftn_message',)
     @admin.display(ordering='number', description='Поправка')
     def wrap_correction(self, obj):
@@ -105,6 +106,13 @@ class SymbolsDepartmentHistoryAdmin(SimpleHistoryAdmin):
                 Q(national=search_term))
 
         return queryset, may_have_duplicates
+
+    @admin.display()
+    def wrap_symbol(self, obj):
+        string_result = ''
+        if obj.correction:
+            string_result = f'symbol {obj.national} in corr {obj.correction}'
+        return string_result
 
 
 admin.site.register(Correction, CorrectionHistoryAdmin)
