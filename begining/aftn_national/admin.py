@@ -54,9 +54,7 @@ class CorrectionHistoryAdmin(SimpleHistoryAdmin):
     @admin.action(description='Заполнить текст поправки из телеграммы')
     def request_message(self, request, queryset):
         for query in queryset:
-            print(request_db(query.header_aftn_message, query.date))
             text, error = request_db(query.header_aftn_message, query.date)
-
             if error:
                 self.message_user(request, f'{query} - ошибка: {text}', messages.ERROR)
             else:

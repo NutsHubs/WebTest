@@ -24,7 +24,7 @@ def request_db(aftn_header, date_field: datetime):
 
     archive_date, date_time_from, date_time_to = get_date(sender_time, date_field)
 
-    request_text = 'Not records of servers in DB', error
+    request_text = 'Not records of servers in DB.', error
     for db_host in ServerDB.objects.all():
         db_conn = {'dbname': db_host.dbname,
                    'user': db_host.user,
