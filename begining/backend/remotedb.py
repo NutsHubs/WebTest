@@ -24,7 +24,8 @@ def request_db(aftn_header, date_field: datetime):
 
     archive_date, date_time_from, date_time_to = get_date(sender_time, date_field)
 
-    for db_host in ServerDB.objects.filter(host='172.20.0.12'):
+    request_text = 'Not records of servers in DB', error
+    for db_host in ServerDB.objects.all():
         db_conn = {'dbname': db_host.dbname,
                    'user': db_host.user,
                    'password': db_host.password,
@@ -41,8 +42,11 @@ def request_db(aftn_header, date_field: datetime):
 
         if not request_text[1]:
             return text_strip_verify(request_text[0])
+        elif str(request_text[0]).find('timeout expired'):
+            continue
         else:
-            return request_text
+            break
+    return request_text
 
 
 def connect(param_request, db_conn):
