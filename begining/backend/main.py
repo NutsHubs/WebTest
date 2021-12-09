@@ -4,10 +4,6 @@ import django
 import re
 from django.template.defaulttags import register
 
-os.environ.setdefault("DJANGO_SETTINGS_MODULE", "begining.settings")
-sys.path.append('/Users/Abysscope/WebTest/begining/')
-django.setup()
-
 from aftn_national import models
 
 
@@ -78,4 +74,9 @@ def get_item(dict, key):
 
 
 if __name__ == '__main__':
+    sys.path.append('/Users/Abysscope/WebTest/begining/')
+    os.environ.setdefault("DJANGO_SETTINGS_MODULE", "begining.settings")
+    from django.conf import settings
+    if not settings.configured:
+        django.setup()
     print(get_results('xx'))

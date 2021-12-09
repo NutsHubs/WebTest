@@ -29,9 +29,7 @@ class CorrectionHistoryAdmin(SimpleHistoryAdmin):
     history_list_display = ['wrap_correction', 'date', 'header_aftn_message']
     list_display = ('title_correction', 'header_aftn_message', 'is_text')
     actions = ['request_message']
-    """inlines = [LocationInLine,
-               DesignatorInLine,
-               SymbolsDepartmentInLine]"""
+
     #fields = (('number', 'date'), 'header_aftn_message',)
 
     @admin.display(ordering='number', description='Поправка')
@@ -57,7 +55,7 @@ class CorrectionHistoryAdmin(SimpleHistoryAdmin):
     def request_message(self, request, queryset):
         self.message_user(request, 'OK', messages.ERROR)
         for query in queryset:
-            request_db(f'{query.header_aftn_message}')
+            request_db(query.header_aftn_message, query.date)
         pass
 
 
