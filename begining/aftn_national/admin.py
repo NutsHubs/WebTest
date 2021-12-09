@@ -51,12 +51,15 @@ class CorrectionHistoryAdmin(SimpleHistoryAdmin):
         else:
             return True
 
-    @admin.action(description='Заполнить текст поправок из телеграммы с указанным адресом отправителя')
+    @admin.action(description='Заполнить текст поправки из телеграммы')
     def request_message(self, request, queryset):
-        self.message_user(request, 'OK', messages.ERROR)
         for query in queryset:
-            request_db(query.header_aftn_message, query.date)
-        pass
+            text, error = request_db(query.header_aftn_message, query.date)
+            if error:
+                self.message_user(request, f'{query} - ошибка: {text}', messages.ERROR)
+            else:
+                queryset.filter(pk=query.pk).update(aftn_message=text)
+                self.message_user(request, f'{query} - текст был обновлен', messages.SUCCESS)
 
 
 class LocationIndicatorHistoryAdmin(SimpleHistoryAdmin):
