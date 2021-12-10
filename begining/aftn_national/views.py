@@ -67,6 +67,7 @@ def main(request):
         'search': q,
         'results': results_query,
         'results_headers': results_headers,
+        'corr_latest': Correction.objects.latest('number')
     })
 
 
