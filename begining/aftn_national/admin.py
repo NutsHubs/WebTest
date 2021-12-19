@@ -7,20 +7,25 @@ from .models import Correction, LocationIndicator, DesignatorOrg, SymbolsDepartm
 from backend.remotedb import request_db
 
 
-class LocationInLine(admin.TabularInline):
+class LocationInLine(admin.StackedInline):
     model = LocationIndicator
-    extra = 1
-    list_display_link = ('national',)
+    extra = 0
+    exclude = ['international',
+               'district_administration',
+               ]
+    template = 'correction/index.html'
 
 
 class DesignatorInLine(admin.TabularInline):
     model = DesignatorOrg
-    extra = 1
+    readonly_fields = ['national',
+                       'name',]
+    extra = 0
 
 
 class SymbolsDepartmentInLine(admin.TabularInline):
     model = SymbolsDepartment
-    extra = 1
+    extra = 0
 
 
 class CorrectionHistoryAdmin(SimpleHistoryAdmin):
@@ -30,11 +35,8 @@ class CorrectionHistoryAdmin(SimpleHistoryAdmin):
     list_display = ('title_correction', 'header_aftn_message', 'is_text')
     actions = ['request_message']
 
-    #fields = (('number', 'date'), 'header_aftn_message',)
-
     @admin.display(ordering='number', description='Поправка')
     def wrap_correction(self, obj):
-        string_result = ''
         if obj.date is None:
             if obj.number is None:
                 string_result = 'Поправка'
