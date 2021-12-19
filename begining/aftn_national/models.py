@@ -28,7 +28,7 @@ class Correction(models.Model):
                                          max_length=15,
                                          validators=[RegexValidator(
                                              regex=r'[0-9]{6} \S{8}',
-                                             message='Некоректная строка отправителя')],
+                                             message='Некорректная строка отправителя')],
                                          blank=True)
     aftn_message = models.TextField(verbose_name='Содержание поправки',
                                     max_length=1800,
@@ -97,7 +97,7 @@ class LocationIndicator(models.Model):
     correction = models.ForeignKey(Correction, models.SET_NULL,
                                    verbose_name='Поправка',
                                    blank=True, null=True)
-    marked = models.BooleanField(verbose_name='Помечен на удаление',
+    marked = models.BooleanField(verbose_name='Признак отсутствия связи',
                                  default=False)
     excluded = models.BooleanField(verbose_name='Исключен',
                                    default=False)
@@ -136,7 +136,7 @@ class DesignatorOrg(models.Model):
     correction = models.ForeignKey(Correction, models.SET_NULL,
                                    verbose_name='Поправка',
                                    blank=True, null=True)
-    marked = models.BooleanField(verbose_name='Помечен на удаление',
+    marked = models.BooleanField(verbose_name='Признак отсутствия связи',
                                  default=False)
     excluded = models.BooleanField(verbose_name='Исключен',
                                    default=False)
@@ -166,7 +166,7 @@ class SymbolsDepartment(models.Model):
                                    verbose_name='Поправка',
                                    blank=True,
                                    null=True)
-    marked = models.BooleanField(verbose_name='Помечен на удаление',
+    marked = models.BooleanField(verbose_name='Признак отсутствия связи',
                                  default=False)
     excluded = models.BooleanField(verbose_name='Исключен',
                                    default=False)
