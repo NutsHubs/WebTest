@@ -47,7 +47,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'django.contrib.sites',
     'django.contrib.flatpages',
-    'polls',
+    #'polls',
     'backend',
     'aftn_national',
     'simple_history',
