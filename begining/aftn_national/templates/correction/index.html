@@ -1,13 +1,27 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Corrections</title>
-</head>
-<body>
-    <H1>Corrections</H1>
-    {% for correction in correction_list %}
-    <b>{{ correction }}</b>
+<table>
+    <thead><tr>
+        {% for field in inline_admin_formset.fields %}
+        <th class="original">{{ field.label }}</th>
+        {% endfor %}
+    </tr></thead>
+    <tbody>
+    {% for inline_admin_form in inline_admin_formset %}
+    <tr class="!!!form-row">
+    {% for fieldset in inline_admin_form %}
+      {% for line in fieldset %}
+        {% for field in line %}
+          <td>
+          {% if field.is_readonly %}
+              <p>{{ field.contents }}</p>
+          {% else %}
+              {{ field.field.errors.as_ul }}
+              {{ field.field }}
+          {% endif %}
+          </td>
+        {% endfor %}
+      {% endfor %}
     {% endfor %}
-</body>
-</html>
+    </tr>
+    {% endfor %}
+    </tbody>
+</table>
