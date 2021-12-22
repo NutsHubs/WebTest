@@ -74,7 +74,7 @@ def connect(param_request, db_conn):
 
 
 def get_date(sender_time, date_field: datetime):
-    archive_date = f'{date_field.year}_{date_field.month}'
+    archive_date = f'{date_field.year}_%02d' % date_field.month
     date_time_from = datetime(date_field.year,
                               date_field.month,
                               day=int(sender_time[:2]),
@@ -105,7 +105,7 @@ if __name__ == '__main__':
 
     if not settings.configured:
         django.setup()
-    request_db('242340 sadf', datetime(2021, 11, 23))
+    request_db('242340 sadf', datetime(2021, 5, 23))
     with open('/Users/Abysscope/WebTest/begining/db_query.txt', 'r') as r:
         text = r.read()
     text_strip_verify(text)
