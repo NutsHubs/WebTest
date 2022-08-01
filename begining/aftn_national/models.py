@@ -31,7 +31,7 @@ class Correction(models.Model):
                                              message='Некорректная строка отправителя')],
                                          blank=True)
     aftn_message = models.TextField(verbose_name='Содержание поправки',
-                                    max_length=1800,
+                                    max_length=6000,
                                     blank=True)
     history = HistoricalRecords()
 

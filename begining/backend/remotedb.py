@@ -105,7 +105,7 @@ if __name__ == '__main__':
 
     if not settings.configured:
         django.setup()
-    request_db('242340 sadf', datetime(2021, 5, 23))
+    request_db('080638 ууууясдт', datetime(2021, 9, 8))
     with open('/Users/Abysscope/WebTest/begining/db_query.txt', 'r') as r:
         text = r.read()
     text_strip_verify(text)
