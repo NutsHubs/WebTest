@@ -18,7 +18,7 @@ from django.urls import path, include
 
 
 urlpatterns = [
-    #path('', include('polls.urls')),
+    path('', include('aftn_national.urls')),
     path('admin/', admin.site.urls),
     path('aftn/', include('aftn_national.urls')),
     path('aftn/about/', include('django.contrib.flatpages.urls')),
