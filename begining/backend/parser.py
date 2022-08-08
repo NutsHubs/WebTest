@@ -1,6 +1,7 @@
 import glob
 import pprint
 import re
+import csv
 from datetime import date
 from bs4 import BeautifulSoup
 
@@ -11,6 +12,47 @@ import django
 os.environ.setdefault("DJANGO_SETTINGS_MODULE", "begining.settings")
 sys.path.append('/Users/Abysscope/WebTest/begining/')
 django.setup()
+
+
+def parse_csv(path, index_page=None):
+    """ Parse csv file """
+    with open(path, 'r', newline='\r\n', encoding='utf-8-sig') as f:
+        reader = csv.reader(f, delimiter=';')
+        import aftn_national
+        target_class = getattr(aftn_national.models, 'AnnexFour')
+
+        for row in reader:
+            item = row[0]
+            com_center = row[1]
+            replaced_aftn = row[2]
+            new_aftn = row[3]
+            name = row[4]
+
+            if len(item) > 0:
+                previous_item = item
+            else:
+                item = previous_item
+
+            if len(com_center) > 0:
+                previous_com = com_center
+            else:
+                com_center = previous_com
+
+            fields_dict = {'item': item,
+                           'com_center': com_center,
+                           'replaced_aftn': replaced_aftn,
+                           'new_aftn': new_aftn,
+                           'name': name}
+
+            obj_is = target_class.objects.filter(item__exact=item,
+                                                 com_center__exact=com_center,
+                                                 replaced_aftn__exact=replaced_aftn,
+                                                 new_aftn__exact=new_aftn,
+                                                 name__exact=name
+                                                 ).exists()
+            if not obj_is:
+                row_create = target_class.objects.create(**fields_dict)
+                row_create.save()
 
 
 def parse(path, index_page):
@@ -93,7 +135,7 @@ def populate_models(data, index_page):
     with open('error.txt', 'a') as wr:
         for string in list_error:
             wr.write(string)
-    #pprint.pprint(target_class.objects.all())
+    # pprint.pprint(target_class.objects.all())
 
 
 def _parse_soup(soup, index_page):
@@ -230,5 +272,6 @@ def _parse_table_data(td_list, index_page):
 
 
 if __name__ == '__main__':
-    parse('/Users/Abysscope/Documents/www/indexes', 5.2)
+    # parse('/Users/Abysscope/Documents/www/indexes', 5.2)
+    parse_csv('/Users/Abysscope/Downloads/annex_4.csv')
     pass

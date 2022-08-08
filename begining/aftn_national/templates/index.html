@@ -38,14 +38,27 @@
               </thead>
               {% for value in values %}
               <tr>
+                  {% if value.national %}
                   <td style="width:40px;text-align:center">{{ value.national }}</td>
+                  {% elif value.replaced_aftn %}
+                  <td style="width:180px;text-align:left">{{ value.replaced_aftn }}</td>
+                  {% else %}
+                  <td style="width:40px;text-align:center"></td>
+                  {% endif %}
+                  {% if value.international %}
                   <td style="width:40px">{{ value.international }}</td>
+                  {% elif value.new_aftn%}
+                  <td style="width:180px">{{ value.new_aftn }}</td>
+                  {% else %}
+                  <td style="width:40px"></td>
+                  {% endif %}
                   <td style="width:10px">{% if value.marked %}*{% endif %}</td>
                   <td style="width:65px">{% if value.excluded %}исключен{% endif %}</td>
                   <td>{{ value.name }}</td>
                   <td style="width:120px">
                       {% if value.location %}{{ value.location }}{% endif %}
                       {% if value.district_administration %}{{ value.district_administration }}{% endif %}
+                      {{ value.com_center }}
                   </td>
                   <td style="width:250px">{% if value.correction is not None %}{{ value.correction }}{% endif %}</td>
               </tr>

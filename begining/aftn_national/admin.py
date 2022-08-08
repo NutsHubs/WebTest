@@ -2,7 +2,8 @@ from django.contrib import admin
 from django.contrib import messages
 from django.db.models import Q
 from simple_history.admin import SimpleHistoryAdmin
-from .models import Correction, LocationIndicator, DesignatorOrg, SymbolsDepartment, ServerDB
+from .models import Correction, LocationIndicator, DesignatorOrg, SymbolsDepartment, Annexes,\
+    AnnexFour, ServerDB
 
 from backend.remotedb import request_db
 
@@ -137,6 +138,20 @@ class SymbolsDepartmentHistoryAdmin(SimpleHistoryAdmin):
         return string_result
 
 
+class AnnexesHistoryAdmin(SimpleHistoryAdmin):
+    list_display = ('title_correction',
+                    'name')
+
+
+class AnnexFourHistoryAdmin(SimpleHistoryAdmin):
+    list_display = ('replaced_aftn',
+                    'new_aftn',
+                    'name',
+                    'com_center')
+    search_fields = ('new_aftn',)
+    pass
+
+
 class ServerDBAdmin(admin.ModelAdmin):
     pass
 
@@ -145,4 +160,6 @@ admin.site.register(Correction, CorrectionHistoryAdmin)
 admin.site.register(LocationIndicator, LocationIndicatorHistoryAdmin)
 admin.site.register(DesignatorOrg, DesignatorOrgHistoryAdmin)
 admin.site.register(SymbolsDepartment, SymbolsDepartmentHistoryAdmin)
+admin.site.register(Annexes, AnnexesHistoryAdmin)
+admin.site.register(AnnexFour, AnnexFourHistoryAdmin)
 admin.site.register(ServerDB, ServerDBAdmin)

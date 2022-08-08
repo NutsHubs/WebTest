@@ -79,7 +79,7 @@ class LocationIndicator(models.Model):
                               max_length=4,
                               validators=[RegexValidator(
                                   regex=r'[а-яА-Я]{4}',
-                                  message='Требуется 4 символа на киррилице')],
+                                  message='Требуется 4 символа на кириллице')],
                               unique=True)
     international = UpperCharField(verbose_name='Обозначение международное',
                                    max_length=4,
@@ -120,7 +120,7 @@ class DesignatorOrg(models.Model):
                               max_length=3,
                               validators=[RegexValidator(
                                   regex=r'[а-яА-Я]{2,3}',
-                                  message='Требуется 2-3 символа на киррилице')],
+                                  message='Требуется 2-3 символа на кириллице')],
                               unique=True)
     international = UpperCharField(verbose_name='Обозначение международное',
                                    max_length=3,
@@ -156,7 +156,7 @@ class SymbolsDepartment(models.Model):
                               max_length=2,
                               validators=[RegexValidator(
                                   regex=r'[а-яА-Я]{2}',
-                                  message='Требуется 2 символа на киррилице')],
+                                  message='Требуется 2 символа на кириллице')],
                               unique=True
                               )
     name = models.CharField(verbose_name='Наименование подразделения',
@@ -181,6 +181,62 @@ class SymbolsDepartment(models.Model):
         ordering = ['national']
 
 
+class Annexes(models.Model):
+    number = models.IntegerField(verbose_name='Номер приложения',
+                                 unique=True)
+    name = models.CharField(verbose_name='Название приложения',
+                            max_length=256,
+                            blank=True)
+    notes = models.TextField(verbose_name='Примечания',
+                             max_length=6000,
+                             blank=True)
+    history = HistoricalRecords()
+
+    def __str__(self):
+        return f'Приложение №{self.number}'
+
+    @property
+    @admin.display(ordering='number', description='Приложение')
+    def title_correction(self):
+        return f'Приложение №{self.number}'
+
+    class Meta:
+        verbose_name = 'Приложение к сборнику'
+        verbose_name_plural = 'Приложения к сборнику'
+
+
+class AnnexFour(models.Model):
+    item = models.IntegerField(verbose_name='Номер подпункта')
+    com_center = models.CharField(verbose_name='Узел связи МО РФ',
+                                  max_length=256)
+    replaced_aftn = UpperCharField(verbose_name='Адрес АФТН заменяемый',
+                                   max_length=8,
+                                   validators=[RegexValidator(
+                                       regex=r'[а-яА-Я]{8}',
+                                       message='Требуется 8 символов на кириллице')],
+                                   )
+    new_aftn = UpperCharField(verbose_name='Адрес АФТН новый',
+                              max_length=8,
+                              validators=[RegexValidator(
+                                  regex=r'[а-яА-Я]{8}',
+                                  message='Требуется 8 символов на кириллице')],
+                              )
+    name = models.CharField(verbose_name='Наименование адресата',
+                            max_length=256,
+                            blank=True)
+    annexe = models.IntegerField(editable=False,
+                                 default=4)
+    history = HistoricalRecords()
+
+    def __str__(self):
+        return f'Адрес {self.replaced_aftn}'
+
+    class Meta:
+        verbose_name = 'Приложение №4'
+        verbose_name_plural = 'Приложение №4'
+        ordering = ['item']
+
+
 class ServerDB(models.Model):
     dbname = models.CharField(verbose_name='Database name',
                               max_length=50)
@@ -190,7 +246,7 @@ class ServerDB(models.Model):
                                 max_length=50)
     host = models.GenericIPAddressField(verbose_name='Database host address',
                                         protocol='IPv4')
-    port = models.IntegerField(verbose_name='Connection port number',)
+    port = models.IntegerField(verbose_name='Connection port number', )
 
     def __str__(self):
         return f'Server {self.host}'
