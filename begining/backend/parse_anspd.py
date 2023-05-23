@@ -28,8 +28,8 @@ def authentication():
     fv('1', 'pass', setting['PASS'])
     submit()
     #info()
-    file_index = tmp_dir / f'index.html'
-    save_html(file_index)
+    file_index = tmp_dir / 'index.html'
+    save_html(str(file_index))
 
     for center in centers:
         link = parse_index(file_index, center)
