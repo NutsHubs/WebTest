@@ -1,6 +1,8 @@
 from django.contrib import admin
+from django.contrib import messages
 from simple_history.admin import SimpleHistoryAdmin
 from .models import Center, Amhs, Aftn
+from backend.parse_anspd import parse_anspd
 
 # Register your models here.
 
@@ -17,6 +19,7 @@ class AmhsHistoryAdmin(SimpleHistoryAdmin):
                     'route_res',
                     'route_res_mtcu',
                     'country')
+    actions = ['parse_action']
     
     @admin.display(description='AMHS')
     def amhs(self, obj):
@@ -26,6 +29,13 @@ class AmhsHistoryAdmin(SimpleHistoryAdmin):
             if not obj.ou is '':
                 result = f'{result}OU={obj.ou}/'
         return result
+    
+    @admin.action(description='Получить данные с anspd.ru')
+    def parse_action(self, request, queryset):
+        parse_anspd()
+        self.message_user(request, f'Данные получены', messages.SUCCESS)
+
+        
 
 class AftnHistoryAdmin(SimpleHistoryAdmin):
     list_filter = ['center__center']

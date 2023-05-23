@@ -9,27 +9,26 @@ from twill.commands import *
 from twill import browser
 from bs4 import BeautifulSoup
 
-os.environ.setdefault("DJANGO_SETTINGS_MODULE", "begining.settings")
-django.setup()
-
 site = 'https://anspd.ru'
 centers = ['UIII', 'UWWW', 'UEEE', 'ULLL', 'UNKL', 'UNNT', 'URRR', 'USSV', 'USTU', 'UUUU', 'UUYY', 'UHMM', 'UHPP', 'UHHH']
-base_dir = Path(__file__).resolve().parent.parent
-tmp_dir = f'{base_dir}/begining/backend/tmp/'
-setting_dir = f'{base_dir}/begining/'
+#base_dir = Path(__file__).resolve().parent.parent
+base_dir = Path(__file__)
+tmp_dir = Path(f'{Path(__file__).resolve().parent}/tmp/')
+#setting_dir = f'{base_dir}/begining/'
+setting_dir = Path(f'{Path(__file__).resolve().parent.parent}/begining/')
 
 def parse_anspd():
     authentication()
 
 def authentication():
-    with open(f'{setting_dir}setting.json', 'r') as f:
+    with open(setting_dir / 'setting.json', 'r') as f:
         setting = json.load(f)
     browser.go(site)
     fv('1', 'login', setting['LOGIN'])
     fv('1', 'pass', setting['PASS'])
     submit()
     #info()
-    file_index = f'{os.path.abspath("./")}/begining/backend/tmp/index.html'
+    file_index = tmp_dir / f'index.html'
     save_html(file_index)
 
     for center in centers:
@@ -37,8 +36,8 @@ def authentication():
         if link is False:
             continue
 
-        file_center_AMHS = f'{os.path.abspath("./")}/begining/backend/tmp/{center}_AMHS.html'
-        file_center_AFTN = f'{os.path.abspath("./")}/begining/backend/tmp/{center}_AFTN.html'
+        file_center_AMHS = tmp_dir / f'{center}_AMHS.html'
+        file_center_AFTN = tmp_dir / f'{center}_AFTN.html'
 
         browser.go(site + link[0])
         save_html(file_center_AMHS)
@@ -67,9 +66,9 @@ def parse(file_center, center):
     """
     with open(file_center, 'r', encoding='utf-8') as read:
         soup = BeautifulSoup(read, 'html.parser')
-        if 'AMHS' in file_center:
+        if 'AMHS' in file_center.name:
             condition = 'AMHS'
-        elif 'AFTN' in file_center:
+        elif 'AFTN' in file_center.name:
             condition = 'AFTN'
         else:
             return False
@@ -211,12 +210,13 @@ def _parse_table_data(td_list, condition):
     return result
     
 
-if __name__ == '__main__':
-    os.environ.setdefault("DJANGO_SETTINGS_MODULE", "begining.settings")
-    sys.path.append('C:/Users/admin/OneDrive/Документы/GitHubRepo/WebTest/begining')
-    django.setup()
+if __name__ == '__main__': 
+    #os.environ.setdefault("DJANGO_SETTINGS_MODULE", "begining.settings")
+    #sys.path.append('C:/Users/admin/OneDrive/Документы/GitHubRepo/WebTest/begining')
+    #django.setup()
     
-    #parse_anspd()
+    parse_anspd()
     #file_test = f'{os.path.abspath("./")}/begining/backend/tmp/index.html'
     #parse_index(file_test, 'UHHH')
-    parse(f'{os.path.abspath("./")}/begining/backend/tmp/UEEE_AFTN.html', 'UEEE')
+    #parse(f'{os.path.abspath("./")}/begining/backend/tmp/UEEE_AFTN.html', 'UEEE')
+    
