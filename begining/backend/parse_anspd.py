@@ -9,9 +9,6 @@ from twill.commands import *
 from twill import browser
 from bs4 import BeautifulSoup
 
-#add to github
-import abc
-
 site = 'https://anspd.ru'
 centers = ['UIII', 'UWWW', 'UEEE', 'ULLL', 'UNKL', 'UNNT', 'URRR', 'USSV', 'USTU', 'UUUU', 'UUYY', 'UHMM', 'UHPP', 'UHHH']
 base_dir = Path(__file__).resolve().parent.parent
