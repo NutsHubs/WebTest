@@ -1,5 +1,16 @@
 # Project exclude paths
-/venv/
+/.venv/
+/.vscode/
 /db.sqlite3
 /begining/polls
 /begining/begining/settings.py
+.vscode/settings.json
+begining/backend/__pycache__/
+begining/backend/tmp/
+begining/begining/setting.json
+begining/routes/__pycache__/
+begining/routes/migrations/
+begining/aftn_national/migrations/
+begining/begining/__pycache__/
+begining/aftn_national/__pycache__/
+begining/db.sqlite3
