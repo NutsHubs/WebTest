@@ -157,7 +157,7 @@ ADMIN_ORDERING = [
 
 
 # Creating a sort function
-def get_app_list(self, request):
+def get_app_list(self, request, app_label=None):
     """
     override the function in /django/contrib/admin/sites.py
     it sort models in app included in custom ADMIN_ORDERING
