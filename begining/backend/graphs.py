@@ -1,7 +1,6 @@
 import os
 import sys
 import django
-import re
 from pathlib import Path
 from django.template.defaulttags import register
 
@@ -67,7 +66,9 @@ def request_route(center, type, aftn):
     
     if not aftn_query_exists:
         if not center_ref:
-            NODES['OTHER'].append(f'{center} {type}')
+            other_node = f'{center} {type}'
+            if not other_node in NODES['OTHER']:
+                NODES['OTHER'].append(f'{center} {type}')
         return False
     
     routes_tmp = {'AFTN': set(), 'AMHS': set()}
@@ -111,20 +112,14 @@ def replace(route, center, type):
 
 def test():
     nx_graph = nx.MultiDiGraph()
-    """nx_graph.nodes[1]['title'] = 'Number 1'
-    nx_graph.nodes[1]['group'] = 1
-    nx_graph.nodes[3]['title'] = 'I belong to a different group!'
-    nx_graph.nodes[3]['group'] = 10"""
-    #nx_graph.add_node(20, size=20, title='couple', shape='box')
-    #nx_graph.add_node(21, size=15, title='couple', shape='box')
-    #nx_graph.add_nodes_from(['AFTN\nULLL', 'AFTN\nUHHH'], shape='box', color='green')
-    #nx_graph.add_nodes_from([ 'AMHS\nULLL', 'UUUU', 'AMHS\nUHHH'], shape='circle', color='grey')
+
     aftn_nodes = []
     amhs_nodes = []
     other_nodes = []
     s_nodes = []
     e_aftn_nodes = []
     e_amhs_nodes = []
+
     for aftn in NODES['AFTN']:
         if aftn in START_NODES:
             s_nodes.append(f'{aftn}\nAFTN')
@@ -157,15 +152,9 @@ def test():
 
     nx_graph.add_nodes_from(other_nodes, shape='circle', color='red')
 
-    """
-    nx_graph.add_edges_from([('AFTN\nULLL', 'AMHS\nULLL', {'label': 'uu', 'length': '1'}), ('AMHS\nULLL', 'UUUU'),
-                             ('AFTN\nULLL', 'UUUU', {"color": "red"})], color='black')
-    nx_graph.add_edges_from([('AFTN\nUHHH', 'AMHS\nUHHH', {'title': 'uu', 'length': '1'}), ('AMHS\nUHHH', 'UUUU'),
-                             ('AFTN\nUHHH', 'AFTN\nULLL', {"color": "red"})], color='black', weight=0.4)
-    """
     nx_graph.add_edges_from(p_edges, color='black')
     nx_graph.add_edges_from(b_edges, color='red')
-    #nx_graph.add_node(25, size=25, label='lonely', title='lonely node', group=3)
+
     nt = Network('1500px', '1800px', notebook=True, directed=True)
     # populates the nodes and edges data structures
     nt.from_nx(nx_graph)

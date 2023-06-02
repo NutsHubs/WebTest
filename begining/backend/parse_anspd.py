@@ -199,24 +199,33 @@ def _parse_table_data(td_list, condition):
         if route_res.find('(') != -1:
             route_res = route_res[1:-1]    
         result['route_res'] = route_res
-        result['route_mtcu'] = True if str(td_list[8].text).strip().upper() == 'Y' else False
-        result['aftn'] = str(td_list[9].text).strip()
+        result['route_res_mtcu'] = True if str(td_list[8].text).strip().upper() == 'Y' else False
+        result['aftn'] = str(td_list[9].text).strip().replace('&nbsp', '')
         result['country'] = str(td_list[10].text).strip()
     elif condition == 'AFTN':
-        result['aftn'] = str(td_list[0].text).strip()
-        result['route'] = str(td_list[1].text).strip()
-        result['route_res'] = str(td_list[2].text).strip()
+        aftn = str(td_list[0].text).strip()
+        if aftn.find('*') != -1:
+            aftn = aftn.replace('*', '')
+        result['aftn'] = aftn
+        route = str(td_list[1].text).strip()
+        if route.find('(') != -1:
+            route = route[1:-1]
+        result['route'] = route
+        route_res = str(td_list[2].text).strip()
+        if route_res.find('(') != -1:
+            route_res = route_res[1:-1]
+        result['route_res'] = route_res
 
     return result
     
 
 if __name__ == '__main__': 
-    #os.environ.setdefault("DJANGO_SETTINGS_MODULE", "begining.settings")
-    #sys.path.append('C:/Users/admin/OneDrive/Документы/GitHubRepo/WebTest/begining')
-    #django.setup()
+    os.environ.setdefault("DJANGO_SETTINGS_MODULE", "begining.settings")
+    sys.path.append('C:/Users/admin/OneDrive/Документы/GitHubRepo/WebTest/begining')
+    django.setup()
     
-    parse_anspd()
-    #file_test = f'{os.path.abspath("./")}/begining/backend/tmp/index.html'
-    #parse_index(file_test, 'UHHH')
+    #parse_anspd()
+    file_test = tmp_dir / 'UUUU_AFTN.html'
+    parse(file_test, 'UUUU')
     #parse(f'{os.path.abspath("./")}/begining/backend/tmp/UEEE_AFTN.html', 'UEEE')
     

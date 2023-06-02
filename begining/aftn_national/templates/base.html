@@ -59,7 +59,8 @@
     <!-- END Header -->
     {% block breadcrumbs %}
     <div class="breadcrumbs">
-    <a href="{% url 'aftn_national:main' %}">Основная</a>
+    <a href="{% url 'aftn_national:main' %}" style="padding-right: 40px">Сборник</a>
+    <a href="{% url 'routes:main' %}" style="padding-right: 40px">Маршруты</a>
     {% if title %} &rsaquo; {{ title }}{% endif %}
     </div>
     {% endblock %}

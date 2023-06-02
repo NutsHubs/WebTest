@@ -14,3 +14,5 @@ begining/aftn_national/migrations/
 begining/begining/__pycache__/
 begining/aftn_national/__pycache__/
 begining/db.sqlite3
+lib/
+*.html

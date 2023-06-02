@@ -1,7 +1,7 @@
 {% extends "base_site.html" %}
 {% load i18n static %}
 
-{% block extrastyle %}{{ block.super }}<link rel="stylesheet" type="text/css" href="{% static "/aftn_national/css/dashboard.css" %}">{% endblock %}
+{% block extrastyle %}{{ block.super }}<link rel="stylesheet" type="text/css" href="{% static '/aftn_national/css/dashboard.css' %}">{% endblock %}
 
 {% block coltype %}colMS{% endblock %}
 
@@ -16,7 +16,7 @@
   <div id="search-content" align="center">
       <h1 style="padding:10px;margin:0px">Поиск по буквенному обозначению по всему сборнику</h1>
       <h5 style="padding:10px;margin:0px">(Последняя {{ corr_latest }})</h5>
-      <div style="background-color:#212121; margin-bottom:15px" id="toolbar">
+      <div class="toolbar" id="toolbar">
           <form id="list-search" method="get">
               <div align="center">
                 <input type="text" name="q" id="search" value="{{ search }}" autofocus>
@@ -32,7 +32,7 @@
               <thead>
               <tr>
                   {% for header in results_headers|get_item:key %}
-                  <th style="padding:5;background-color:#04AA6D;">{{ header }}</th>
+                  <th style="padding:5;background-color:#a7f3d7;">{{ header }}</th>
                   {% endfor %}
               </tr>
               </thead>

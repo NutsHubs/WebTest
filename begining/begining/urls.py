@@ -22,4 +22,5 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('aftn/', include('aftn_national.urls')),
     path('aftn/about/', include('django.contrib.flatpages.urls')),
+    path('routes/', include('routes.urls')),
 ]

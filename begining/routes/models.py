@@ -63,6 +63,15 @@ class Amhs(models.Model):
 
     def __str__(self):
         return f'Указатель {self.aftn}'
+    
+    @property
+    def amhs(self):
+        result = f'/PRMD={self.prmd}/'
+        if not self.o is '':
+            result = f'{result}O={self.o}/'
+            if not self.ou is '':
+                result = f'{result}OU={self.ou}/'
+        return result
 
     class Meta:
         verbose_name = 'Маршрут AMHS'
