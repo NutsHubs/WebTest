@@ -1,0 +1,57 @@
+/* DASHBOARD */
+
+.dashboard .module table th {
+    width: 100%;
+}
+
+.dashboard .module table td {
+    white-space: nowrap;
+}
+
+.dashboard .module table td a {
+    display: block;
+    padding-right: .6em;
+}
+
+.dashboard .toolbar div{
+    background-color:#212121;
+    margin: auto;
+}
+
+.dashboard .toolbar div input[type=text]{
+    margin: auto;
+}
+
+.dashboard .checkboxes{
+    background-color:#ffffff;
+    margin: 10px;
+}
+
+.dashboard .checkboxes label{
+    display: inline;
+    padding: 5px;
+    margin: auto;
+}
+
+/* RECENT ACTIONS MODULE */
+
+.module ul.actionlist {
+    margin-left: 0;
+}
+
+ul.actionlist li {
+    list-style-type: none;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+h1 {
+    padding: 10px;
+    margin: 0px;
+}
+
+h5 {
+    padding: 10px;
+    margin: 0px;
+}
+

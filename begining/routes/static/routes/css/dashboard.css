@@ -1,0 +1,100 @@
+/* DASHBOARD */
+.dashboard td, .dashboard th {
+    word-break: break-word;
+}
+
+.dashboard .module table th {
+    width: 100%;
+}
+
+.dashboard .module table td {
+    white-space: nowrap;
+}
+
+.dashboard .module table td a {
+    display: block;
+    padding-right: .6em;
+}
+
+.dashboard .toolbar div{
+    background-color:#212121;
+    margin: auto;
+}
+
+.dashboard .toolbar div input[type=text]{
+    margin: auto;
+}
+
+.dashboard .checkboxes{
+    background-color:#ffffff;
+    margin: 10px;
+}
+
+.dashboard .checkboxes label{
+    display: inline;
+    padding: 5px;
+    margin: auto;
+}
+
+.dashboard .results table{
+    width: 100%
+}
+
+.dashboard .results table th{
+    width: 1px;
+    white-space: nowrap;
+    vertical-align: middle;
+    text-align: center;
+    background-color:#a7f3d7;
+}
+
+.dashboard .results table .center{
+    width: 1px;
+    white-space: nowrap;
+    vertical-align: middle;
+    text-align: center;
+    background-color:hsl(44, 100%, 92%);
+    height: 5px;
+    font-weight: bold;
+}
+
+.dashboard .results table .mtcu{
+    max-width: 5px;
+}
+
+.dashboard .results table .route{
+    max-width: 10px;
+    padding: 5px 5px;
+}
+
+.dashboard .results table .align {
+    white-space: nowrap;
+    text-align: center;
+}
+
+.dashboard .results table td {
+    white-space: nowrap;
+}
+
+/* RECENT ACTIONS MODULE */
+
+.module ul.actionlist {
+    margin-left: 0;
+}
+
+ul.actionlist li {
+    list-style-type: none;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+h1 {
+    padding: 10px;
+    margin: 0px;
+}
+
+h5 {
+    padding: 10px;
+    margin: 0px;
+}
+
