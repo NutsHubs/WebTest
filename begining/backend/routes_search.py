@@ -27,9 +27,6 @@ def getRoutes(query, centers:list):
         amhs_routes = amhs_model.objects.filter(center=center_ref)
 
         if query == '':
-            if len(centers) > 1:
-                result['Для получения таблицы маршрутирования выберите только один центр'] = []
-                break
             aftn = list(aftn_routes.values_list('aftn', flat=True))
             amhs = list(amhs_routes.values_list('aftn', flat=True))
             aftn_list = list(set(aftn + amhs))
