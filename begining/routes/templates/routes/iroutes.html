@@ -1,0 +1,101 @@
+{% extends "routes/routes_site.html" %}
+{% load i18n static %}
+
+{% block extrastyle %}{{ block.super }}
+<link rel="stylesheet" type="text/css" href="{% static 'routes/css/dashboard.css' %}">
+<script src="{% static 'routes/js/dashboard.js' %}" defer></script>
+{% endblock %}
+
+{% block coltype %}colMS{% endblock %}
+
+{% block bodyclass %}{{ block.super }} dashboard{% endblock %}
+
+{% block breadcrumbs %}{{ block.super }}{% endblock %}
+
+{% block nav-sidebar %}{% endblock %}
+
+{% block content %}
+
+<div id="content-main">
+  <div id="search-content" align="center">
+      <h1>Поиск маршрута по указателю AFTN</h1>
+      <h5>(Последняя {{ corr_latest }})</h5>
+      
+          <form id="list-search" method="get">
+              <div class="toolbar">
+                <div id="toolbar">
+                  <input type="text" name="q" id="search" value="{{ search }}" autofocus>
+                  <input type="submit" value="Найти">
+                </div>
+              </div>
+              <div class="checkboxes">
+                  <label><input type='checkbox' onclick="selectall(this)">Все</label>
+                  {% for center in centers %}
+                  {% if center in centers_queryset %}
+                  <label><input type='checkbox' name="center" id="{{ center.center }}" value="{{ center.center }}" checked>
+                  {% else %}
+                  <label><input type='checkbox' name="center" id="{{ center.center }}" value="{{ center.center }}">
+                  {% endif %}
+                  {{ center.center }}</label>
+                  {% endfor %}
+              </div>
+          </form>
+      
+      <div class="results" style="display:initial">
+          <table class="result-list" id="result-list">
+              <thead>
+              <tr>
+                <th rowspan="2" style="width:10%"></th>
+                <th rowspan="2">AFTN</th>
+                <th rowspan="2">AMHS</th>
+                <th colspan="2" style="border-left: 1px solid #a3a2a2;">Маршрут в сети ЦКС</th>
+                <th colspan="4" style="border-left: 1px solid #a3a2a2;">Маршрут в сети AMHS</th>
+                <th rowspan="2" style="border-left: 1px solid #a3a2a2;">Страна</th>
+                <th rowspan="2" style="width:10%"></th>
+              </tr>
+              <tr>
+                <th class="route" style="border-left: 1px solid #a3a2a2;">Основной</th>
+                <th class="route">Обходной</th>
+                <th class="route" style="border-left: 1px solid #a3a2a2;">Основной</th>
+                <th class="mtcu">MTCU</th>
+                <th class="route">Обходной</th>
+                <th class="mtcu">MTCU</th>
+              </tr>
+              </thead>
+            {% for center,routes in routes_dict.items %}
+              <tr>
+                  <td colspan="11" class="center">{{ center }}</td>
+              </tr>
+              {% for route in routes %}
+              <tr>
+                  <td></td>
+                  <td class="align">{{ route.aftn }}</td>
+                  <td>{{ route.amhs }}</td>
+                  <td class="align" style="border-left: 1px solid #ddd;">{{ route.route_cks }}</td>
+                  <td class="align" style="border-right: 1px solid #ddd;">{{ route.route_res_cks }}</td>
+                  <td class="align">{{ route.route_amhs }}</td>
+                  {% if route.route_mtcu %}
+                  <td class="align"><img src="{% static 'routes/img/icon-yes.svg' %}" alt="HTML5" style="width:13px;height:13px"></td>
+                  {% elif route.route_mtcu is False %}
+                  <td class="align"><img src="{% static 'routes/img/icon-no.svg' %}" alt="HTML5" style="width:13px;height:13px"></td>
+                  {% else %}
+                  <td></td>
+                  {% endif %}
+                  <td class="align">{{ route.route_res_amhs }}</td>
+                  {% if route.route_res_mtcu %}
+                  <td class="align"><img src="{% static 'routes/img/icon-yes.svg' %}" alt="HTML5" style="width:13px;height:13px"></td>
+                  {% elif route.route_res_mtcu is False %}
+                  <td class="align"><img src="{% static 'routes/img/icon-no.svg' %}" alt="HTML5" style="width:13px;height:13px"></td>
+                  {% else %}
+                  <td></td>
+                  {% endif %}
+                  <td class="align" style="border-left: 1px solid #ddd;">{{ route.country }}</td>
+                  <td></td>
+              </tr>
+              {% endfor %}
+            {% endfor %}
+          </table>
+      </div>
+  </div>
+</div>
+{% endblock %}

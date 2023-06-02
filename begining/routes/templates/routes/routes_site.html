@@ -1,0 +1,10 @@
+{% extends "base.html" %}
+
+{% block title %}{% if subtitle %}{{ subtitle }} | {% endif %}Маршрутный справочник AFTN/AMHS{% endblock %}
+
+{% block branding %}
+<h1 id="site-name"><a href="{% url 'routes:main' %}">{{ site_header|default:_('Маршрутный справочник AFTN/AMHS') }}</a></h1>
+{% endblock %}
+
+{% block nav-global %}{% endblock %}
+
