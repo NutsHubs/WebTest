@@ -44,7 +44,7 @@ def main(request):
     })
 
 def history(request):
-    locale.setlocale(locale.LC_ALL, 'ru_RU.utf-8')
+    #locale.setlocale(locale.LC_ALL, 'ru_RU.utf-8')
     history_ref = History.objects.all()
     if history_ref.exists():
         history_date = history_ref.first().date.strftime('%d %B %Y')
