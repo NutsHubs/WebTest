@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Список изменений</title>
+</head>
+<style>
+    p {
+        margin: 0;
+    }
+    h5 {
+        margin: 5px 0px;
+    }
+    table {
+        margin: 0px 15px;
+        font-size: 80%;
+    }
+</style>
+<body>
+    <h3>Список изменений от {{ history_date }}:</h3>
+    {% for center in centers %}
+        <h5>{{ center }}:</h5>
+        <table>
+            {% if added_dict|get_item:center %}
+            <tr>
+                <td>Добавлены маршруты: </td>
+                <td>{{ added_dict|get_item:center }}</td>
+            </tr>
+            {% endif %}
+            {% if changed_dict|get_item:center %}
+            <tr>
+                <td>Изменениы маршруты: </td>
+            </tr>
+            {% for c_dict in changed_dict|get_item:center %}   
+            {% for aftn, value in c_dict.items %} 
+            <tr>
+                <td style="text-align: center;border-bottom: 1px solid; border-color: #ddd;">{{ aftn }}</td>
+                <td style="border-bottom: 1px solid; border-color: #ddd;">{{ value|linebreaks }}</td>
+            </tr>
+            {% endfor %}
+            {% endfor %}
+            {% endif %}
+            {% if deleted_dict|get_item:center %}
+            <tr>
+                <td>Удалены маршруты: </td>
+                <td>{{ deleted_dict|get_item:center }}</td>
+            </tr>
+            {% endif %}
+        </table>
+    {% endfor %}
+</body>
+</html>
