@@ -18,28 +18,30 @@
 
 <div id="content-main">
   <div id="search-content" align="center">
-      <h1>Поиск маршрута по указателю AFTN</h1>
-      <h5>(Последняя {{ corr_latest }})</h5>
-      
-          <form id="list-search" method="get">
-              <div class="toolbar">
-                <div id="toolbar">
-                  <input type="text" name="q" id="search" value="{{ search }}" autofocus>
-                  <input type="submit" value="Найти">
-                </div>
-              </div>
-              <div class="checkboxes">
-                  <label><input type='checkbox' onclick="selectall(this)">Все</label>
-                  {% for center in centers %}
-                  {% if center in centers_queryset %}
-                  <label><input type='checkbox' name="center" id="{{ center.center }}" value="{{ center.center }}" checked>
-                  {% else %}
-                  <label><input type='checkbox' name="center" id="{{ center.center }}" value="{{ center.center }}">
-                  {% endif %}
-                  {{ center.center }}</label>
-                  {% endfor %}
-              </div>
-          </form>
+      <h1>Поиск по маршруту AFTN или AMHS</h1>
+      {% if history_date %}
+      <a href="{% url 'routes:history' %}" target="_blank">
+        <h5 style="text-decoration: underline; color: var(--link-fg)">(Последние изменения от {{ history_date }})</h5></a>
+      {% endif %}
+      <form id="list-search" method="get">
+          <div class="toolbar">
+            <div id="toolbar">
+              <input type="text" name="q" id="search" value="{{ search }}" autofocus>
+              <input type="submit" value="Найти">
+            </div>
+          </div>
+          <div class="checkboxes">
+              <label><input type='checkbox' onclick="selectall(this)"> Все</label>
+              {% for center in centers %}
+              {% if center in centers_queryset %}
+              <label><input type='checkbox' name="center" id="{{ center.center }}" value="{{ center.center }}" checked>
+              {% else %}
+              <label><input type='checkbox' name="center" id="{{ center.center }}" value="{{ center.center }}">
+              {% endif %}
+              {{ center.center }}</label>
+              {% endfor %}
+          </div>
+      </form>
       
       <div class="results" style="display:initial">
           <table class="result-list" id="result-list">

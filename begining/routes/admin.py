@@ -9,9 +9,9 @@ from backend.parse_anspd import parse_anspd
 class CenterAdmin(admin.ModelAdmin):
     list_display = ('center', 'name')
 
-class AmhsHistoryAdmin(SimpleHistoryAdmin):
+class AmhsHistoryAdmin(admin.ModelAdmin):
     list_filter = ['center__center']
-    ordering = ['aftn']
+    ordering = ['aftn', 'amhs']
     list_display = ('aftn',
                     'amhs',
                     'route',
@@ -21,15 +21,6 @@ class AmhsHistoryAdmin(SimpleHistoryAdmin):
                     'country')
     actions = ['parse_action']
     
-    @admin.display(description='AMHS')
-    def amhs(self, obj):
-        result = f'/PRMD={obj.prmd}/'
-        if not obj.o is '':
-            result = f'{result}O={obj.o}/'
-            if not obj.ou is '':
-                result = f'{result}OU={obj.ou}/'
-        return result
-    
     @admin.action(description='Получить данные с anspd.ru')
     def parse_action(self, request, queryset):
         parse_anspd()
@@ -37,7 +28,7 @@ class AmhsHistoryAdmin(SimpleHistoryAdmin):
 
         
 
-class AftnHistoryAdmin(SimpleHistoryAdmin):
+class AftnHistoryAdmin(admin.ModelAdmin):
     list_filter = ['center__center']
     ordering = ['aftn']
     list_display = ('aftn',

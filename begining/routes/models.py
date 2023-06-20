@@ -37,20 +37,17 @@ class Amhs(models.Model):
     admd = UpperCharField(verbose_name='ADMD',
                             max_length=4,
                             default='ICAO')
-    prmd = UpperCharField(verbose_name='PRMD',
-                            max_length=32)
-    o = UpperCharField(verbose_name='O',
-                        max_length=32,
-                        blank=True)
-    ou = UpperCharField(verbose_name='OU',
-                        max_length=32,
-                        blank=True)
+    amhs = UpperCharField(verbose_name='AMHS',
+                            max_length=64,
+                            default='')
     route = UpperCharField(verbose_name='Основной маршрут',
-                            max_length=4)
+                            max_length=4,
+                            blank=True)
     route_mtcu = models.BooleanField(verbose_name='Основной MTCU',
                                     default=False)
     route_res = UpperCharField(verbose_name='Обходной маршрут',
-                                max_length=4)
+                                max_length=4,
+                                blank=True)
     route_res_mtcu = models.BooleanField(verbose_name='Обходной MTCU',
                                         default=False)
     aftn = UpperCharField(verbose_name='Указатель AFTN',
@@ -58,25 +55,23 @@ class Amhs(models.Model):
     country = models.CharField(verbose_name='Страна',
                                 max_length=200,
                                 blank=True)
-    
-    history = HistoricalRecords()
 
     def __str__(self):
-        return f'Указатель {self.aftn}'
+        return f'Маршрут {self.amhs}'
     
-    @property
+    '''@property
     def amhs(self):
         result = f'/PRMD={self.prmd}/'
         if not self.o is '':
             result = f'{result}O={self.o}/'
             if not self.ou is '':
                 result = f'{result}OU={self.ou}/'
-        return result
+        return result'''
 
     class Meta:
         verbose_name = 'Маршрут AMHS'
         verbose_name_plural = 'Маршруты AMHS'
-        ordering = ['prmd']
+        ordering = ['amhs']
 
 class Aftn(models.Model):
     center = models.ForeignKey(Center,models.SET_NULL,
@@ -85,16 +80,30 @@ class Aftn(models.Model):
     aftn = UpperCharField(verbose_name='Указатель AFTN',
                             max_length=8)
     route = UpperCharField(verbose_name='Основной маршрут',
-                            max_length=16)
+                            max_length=16,
+                            blank=True)
     route_res = UpperCharField(verbose_name='Обходной маршрут',
-                                max_length=16)
-    
-    history = HistoricalRecords()
+                                max_length=16,
+                                blank=True)
 
     def __str__(self):
-        return f'Указатель {self.aftn}'
+        return f'Маршрут {self.aftn}'
 
     class Meta:
         verbose_name = 'Маршрут AFTN'
         verbose_name_plural = 'Маршруты AFTN'
         ordering = ['aftn']
+
+class History(models.Model):
+    class HistoryType(models.IntegerChoices):
+        ADD = 1
+        CHANGE = 2
+        DELETE = 3
+
+    date = models.DateField(auto_now=True)
+    center = models.ForeignKey(Center, on_delete=models.CASCADE,
+                                verbose_name='Центр')
+    aftn = UpperCharField(verbose_name='Указатель AFTN',
+                            max_length=64)
+    history_type = models.IntegerField(choices=HistoryType.choices)
+    notes = models.TextField(blank=True)

@@ -59,7 +59,7 @@
 }
 
 .dashboard .results table .mtcu{
-    max-width: 5px;
+    max-width: 30px;
 }
 
 .dashboard .results table .route{
@@ -74,6 +74,11 @@
 
 .dashboard .results table td {
     white-space: nowrap;
+}
+
+.dashboard .search-content a {
+    color: var(--link-fg);
+    transition: color 0.15s, background 0.15s;
 }
 
 /* RECENT ACTIONS MODULE */
