@@ -183,7 +183,7 @@ def populate_aftn_amhs(data, center, condition):
         if condition == 'AMHS':
             target_class.objects.filter(aftn=deleted[0], amhs=deleted[1], center=center_ref).delete()
         else:
-            target_class.objects.filter(aftn=deleted[0], center=center_ref).delete()
+            target_class.objects.filter(aftn=deleted, center=center_ref).delete()
 
     if add_data or change_data or deleted_data:
         history_class = getattr(routes.models, 'History')
@@ -212,7 +212,7 @@ def populate_aftn_amhs(data, center, condition):
             if condition == 'AMHS':
                 del_value = f'{deleted[1]} для {deleted[0]}'
             else:
-                del_value = f'{deleted[0]}'
+                del_value = f'{deleted}'
             row_create = history_class.objects.create(**{'center': center_ref,
                                                          'aftn': del_value,
                                                          'history_type': 3})
@@ -321,7 +321,7 @@ if __name__ == '__main__':
     django.setup()
     
     parse_anspd()
-    #file_test = tmp_dir / 'UUUU_AMHS.html'
+    #file_test = tmp_dir / 'UUUU_AFTN.html'
     #parse(file_test, 'UUUU')
     #parse(f'{os.path.abspath("./")}/begining/backend/tmp/UEEE_AFTN.html', 'UEEE')
     

@@ -21,7 +21,7 @@
       <h1>Поиск по маршруту AFTN или AMHS</h1>
       {% if history_date %}
       <a href="{% url 'routes:history' %}" target="_blank">
-        <h5 style="text-decoration: underline; color: var(--link-fg)">(Последние изменения от {{ history_date }})</h5></a>
+        <h5 style="text-decoration: underline; color: var(--link-fg); display:inline-block">(Последние изменения от {{ history_date }})</h5></a>
       {% endif %}
       <form id="list-search" method="get">
           <div class="toolbar">
