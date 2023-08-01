@@ -295,7 +295,7 @@ def _parse_table_data(td_list, condition):
             route_res = route_res[1:-1]    
         result['route_res'] = route_res
         result['route_res_mtcu'] = True if str(td_list[8].text).strip().upper() == 'Y' else False
-        result['aftn'] = str(td_list[9].text).strip().replace('&nbsp', '')
+        result['aftn'] = str(td_list[9].text).strip().replace('&nbsp', '').replace('\xa0', '')
         result['country'] = str(td_list[10].text).strip()
     elif condition == 'AFTN':
         aftn = str(td_list[0].text).strip()
@@ -321,7 +321,7 @@ if __name__ == '__main__':
     django.setup()
     
     parse_anspd()
-    #file_test = tmp_dir / 'UUUU_AFTN.html'
+    #file_test = tmp_dir / 'UUUU_AMHS.html'
     #parse(file_test, 'UUUU')
     #parse(f'{os.path.abspath("./")}/begining/backend/tmp/UEEE_AFTN.html', 'UEEE')
     
