@@ -1,0 +1,32 @@
+<dialog id="stats-chart" class="stats-chart" aria-labelledby="stats-chart-title">
+    <header class="stats-chart-header">
+        <div>
+            <h2 id="stats-chart-title"></h2>
+            <p data-chart-period>{{ period_label }}</p>
+        </div>
+        <form method="dialog">
+            <button type="submit" class="stats-chart-close" aria-label="Закрыть график" autofocus>×</button>
+        </form>
+    </header>
+    <p data-chart-status role="status"></p>
+    <div data-chart-content hidden>
+        <div class="stats-chart-actions">
+            <ul class="stats-chart-legend" aria-label="Обозначения">
+                <li class="chart-received">Принято</li>
+                <li class="chart-sent">Передано</li>
+            </ul>
+            <button type="button" class="button" data-chart-download>Скачать PNG</button>
+        </div>
+        <div class="stats-chart-scroll" tabindex="0" role="region" aria-label="Шкала графика по месяцам">
+            <svg data-chart-plot viewBox="0 0 760 320" role="img" aria-label="График сообщений по месяцам"></svg>
+        </div>
+        <p data-chart-gap hidden>Месяцы без данных не отмечены точками.</p>
+        <details class="stats-chart-data">
+            <summary>Значения по месяцам</summary>
+            <table>
+                <thead><tr><th scope="col">Месяц</th><th scope="col">Принято</th><th scope="col">Передано</th></tr></thead>
+                <tbody data-chart-values></tbody>
+            </table>
+        </details>
+    </div>
+</dialog>

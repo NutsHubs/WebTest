@@ -1,0 +1,18 @@
+{% load static l10n %}
+<td class="numeric{% if can_edit and source %} editable-stat{% endif %}" data-counter-field="{{ field }}" data-subscriber-id="{{ subscriber_id }}" data-value="{{ value|unlocalize }}"{% if can_edit and source %} data-original="{{ original|unlocalize }}" data-correction-url="{% url 'traffic_stats:correct_record' source.id %}"{% endif %}>
+    <span class="stat-counter-value"{% if source and value != original %} title="Исходное значение: {{ original|unlocalize }}"{% endif %}>{{ value }}</span>
+    {% if can_edit and source %}
+    <div class="stat-editor">
+        <input type="text" inputmode="numeric" pattern="[0-9]+" aria-label="{% if field == 'received' %}Принято{% else %}Передано{% endif %}: {{ address }}" value="{{ value|unlocalize }}" maxlength="19" autocomplete="off">
+    </div>
+    {% endif %}
+</td>
+<td class="stat-save-cell">
+    {% if show_chart and chart_scope %}
+        {% include 'traffic_stats/chart_button.html' %}
+    {% elif can_edit and source %}
+        <button type="button" class="stat-save" title="Сохранить" aria-label="Сохранить значение" hidden><img src="{% static 'traffic_stats/icons/save.png' %}" width="18" height="18" alt=""></button>
+        <span class="stat-info" role="img" aria-label="Значение скорректировано"{% if value == original %} hidden{% endif %}><img src="{% static 'traffic_stats/icons/information.svg' %}" width="18" height="18" alt=""></span>
+        <button type="button" class="stat-undo" title="Прежнее значение: {{ original|unlocalize }}. Вернуть" aria-label="Прежнее значение: {{ original|unlocalize }}. Вернуть"{% if value == original %} hidden{% endif %}><img src="{% static 'traffic_stats/icons/undo.png' %}" width="18" height="18" alt=""></button>
+    {% endif %}
+</td>

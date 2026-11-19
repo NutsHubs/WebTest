@@ -8,6 +8,8 @@
   <link rel="stylesheet" type="text/css" href="{% static 'admin/css/nav_sidebar.css' %}">
   <script src="{% static 'admin/js/nav_sidebar.js' %}" defer></script>
 {% endif %}
+<link rel="stylesheet" href="{% static 'aftn_national/css/stats-header-menu.css' %}?v=3">
+<script defer src="{% static 'aftn_national/js/stats-header-menu.js' %}?v=2"></script>
 {% block extrastyle %}{% endblock %}
 {% block extrahead %}{% endblock %}
 {% block responsive %}
@@ -61,6 +63,18 @@
     <div class="breadcrumbs">
     <a href="{% url 'aftn_national:main' %}" style="padding-right: 40px">Сборник</a>
     <a href="{% url 'routes:main' %}" style="padding-right: 40px">Маршруты</a>
+    <div class="stats-header-menu">
+        <a class="stats-header-link" href="{% url 'traffic_stats:report' %}?period=1">Статистика</a>
+        <details class="stats-header-dropdown">
+            <summary aria-label="Меню статистики"></summary>
+            <nav class="stats-header-submenu" aria-label="Меню статистики">
+                <a href="{% url 'traffic_stats:report' %}?period=1">Статистика</a>
+                <a href="{% url 'traffic_stats:upload' %}">Загрузить статистику</a>
+                <a href="{% url 'traffic_stats:directory' %}">Абоненты и каналы</a>
+                <a href="{% url 'traffic_stats:help' %}">Помощь по заполнению</a>
+            </nav>
+        </details>
+    </div>
     {% if title %} &rsaquo; {{ title }}{% endif %}
     </div>
     {% endblock %}

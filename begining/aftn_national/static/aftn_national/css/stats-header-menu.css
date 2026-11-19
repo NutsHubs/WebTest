@@ -1,0 +1,19 @@
+/* Only the statistics item in the shared header navigation. */
+.breadcrumbs .stats-header-menu { position: relative; display: inline-block; margin-right: 40px; vertical-align: baseline; }
+.breadcrumbs .stats-header-dropdown { display: inline-block; }
+.breadcrumbs .stats-header-link:focus-visible,
+.breadcrumbs .stats-header-dropdown > summary:focus-visible { outline: 2px solid currentColor; outline-offset: 3px; }
+.breadcrumbs .stats-header-dropdown > summary { color: var(--breadcrumbs-link-fg); cursor: pointer; list-style: none; padding: 0 4px; }
+.breadcrumbs .stats-header-dropdown > summary::-webkit-details-marker { display: none; }
+.breadcrumbs .stats-header-dropdown > summary::after { content: "▾"; font-size: 10px; }
+.breadcrumbs .stats-header-dropdown > summary:hover,
+.breadcrumbs .stats-header-dropdown[open] > summary { color: var(--breadcrumbs-fg); }
+.breadcrumbs .stats-header-submenu { position: absolute; top: 100%; left: 0; right: auto; z-index: 1000; min-width: 210px; max-width: calc(100vw - 32px); box-sizing: border-box; padding: 6px 0; background: var(--body-bg); border: 1px solid var(--border-color); border-radius: 4px; box-shadow: 0 4px 12px #0003; text-align: left; }
+.breadcrumbs .stats-header-submenu a { display: block; padding: 9px 14px; color: var(--link-fg); text-decoration: none; white-space: normal; }
+.breadcrumbs .stats-header-submenu a:hover,
+.breadcrumbs .stats-header-submenu a:focus-visible { background: var(--darkened-bg); color: var(--link-hover-color); }
+
+/* Keep the dropdown within narrow screens. */
+@media (max-width: 480px) {
+    .breadcrumbs .stats-header-submenu { left: auto; right: 0; }
+}

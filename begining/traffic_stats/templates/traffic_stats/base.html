@@ -1,0 +1,70 @@
+{% extends "base_site.html" %}
+{% load static %}
+{% block title %}Статистика{% endblock %}
+{% block branding %}
+<h1 id="site-name"><a href="{% url 'traffic_stats:report' %}">{{ site_header|default:_('Статистика') }}</a></h1>
+{% endblock %}
+{% block extrastyle %}
+{{ block.super }}
+<link rel="stylesheet" type="text/css" href="{% static 'routes/css/dashboard.css' %}">
+<link rel="stylesheet" type="text/css" href="{% static 'traffic_stats/css/dashboard.css' %}?v=53">
+{% endblock %}
+{% block extrahead %}
+{{ block.super }}
+<script defer src="{% static 'traffic_stats/js/notifications.js' %}?v=1"></script>
+{% endblock %}
+{% block messages %}
+{% for message in messages %}
+    {% if 'stats-saved-toast' in message.tags %}
+    <div class="stats-toast" role="status" aria-live="polite" data-auto-dismiss>
+        <span>{{ message }}</span>
+        <button type="button" class="stats-toast-close" aria-label="Закрыть уведомление" title="Закрыть">&times;</button>
+    </div>
+    {% else %}
+    <ul class="messagelist"><li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message|capfirst }}</li></ul>
+    {% endif %}
+{% endfor %}
+{% endblock %}
+{% block coltype %}colMS{% endblock %}
+{% block bodyclass %}{{ block.super }} dashboard stats-page{% endblock %}
+{% block nav-sidebar %}{% endblock %}
+{% block content %}
+<div id="content-main">
+    <div id="search-content" align="center" class="stats results">
+        <div class="page-heading">
+            <h1 class="stats-heading">{% block stats_heading %}Статистика за период{% endblock %}</h1>
+            {% block stats_subheading %}
+            {% if latest_statistics %}
+            <a
+                href="{% url 'traffic_stats:report' %}?month={{ latest_statistics|date:'Y-m' }}&amp;end_month={{ latest_statistics|date:'Y-m' }}">
+                <h5 style="text-decoration: underline; color: var(--link-fg); display: inline-block;">(последняя
+                    статистика за {{ latest_statistics|date:'F Y'|lower }} г.)</h5>
+            </a>
+            {% else %}
+            <h5>(последней статистики не найдено)</h5>
+            {% endif %}
+            {% endblock stats_subheading %}
+        </div>
+        <nav aria-label="Разделы статистики">
+            <div class="toolbar">
+                <div id="toolbar">
+                    {% block stats_toolbar %}
+                    {% if show_period %}
+                    <form method="get" action="{% url 'traffic_stats:report' %}" class="filters toolbar-period" aria-label="Выбор периода статистики">
+                        <input type="hidden" name="period" value="1">
+                        {% include 'traffic_stats/period_fields.html' %}
+                        <input type="submit" value="Показать">
+                    </form>
+                    {% else %}
+                    <a class="button" href="{% url 'traffic_stats:report' %}?period=1">Статистика</a>
+                    <a class="button" href="{% url 'traffic_stats:upload' %}">Загрузить статистику</a>
+                    <a class="button" href="{% url 'traffic_stats:directory' %}">Абоненты и каналы</a>
+                    {% endif %}
+                    {% endblock stats_toolbar %}
+                </div>
+            </div>
+        </nav>
+        {% block stats_content %}{% endblock stats_content %}
+    </div>
+</div>
+{% endblock %}

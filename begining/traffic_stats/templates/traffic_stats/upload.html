@@ -1,0 +1,138 @@
+{% extends "traffic_stats/base.html" %}
+{% load static %}
+{% block extrahead %}
+{{ block.super }}
+<script defer src="{% static 'traffic_stats/js/statistics-upload.js' %}?v=2"></script>
+{% if payload %}
+<script defer src="{% static 'traffic_stats/js/subscriber-suggestions.js' %}?v=4"></script>{% endif %}
+{% endblock %}
+{% block title %}Загрузка статистики{% endblock %}
+{% block stats_heading %}Загрузка статистики{% endblock %}
+{% block stats_subheading %}<h5>Текстовый файл AFTN или AMHS за полный месяц.</h5>{% endblock %}
+{% block stats_toolbar %}
+<form id="stats-upload-form" method="post" enctype="multipart/form-data" class="stats-upload toolbar-upload"
+    aria-label="Загрузка статистики">
+    {% csrf_token %}
+    <input type="hidden" name="action" value="preview">
+    <input type="file" name="file" accept=".txt,text/plain" aria-label="Файл статистики">
+    <input type="submit" value="Загрузить">
+</form>
+{% endblock %}
+{% block stats_content %}
+{% if not payload %}
+<div class="stats-paste-input">
+    <label for="statistics-text">Скопируйте статистику AFTN, AMHS или обе целиком. После вставки нажмите «Загрузить».</label>
+    <textarea id="statistics-text" name="statistics_text" form="stats-upload-form" rows="35"
+        spellcheck="false">{{ pasted_text }}</textarea>
+</div>
+{% endif %}
+{% if error %}<p class="error">{{ error }}</p>{% endif %}
+{% if payload %}
+<form method="post">{% csrf_token %}<input type="hidden" name="action" value="save"><input type="hidden" name="token"
+        value="{{ payload.token }}">
+    <div class="upload-save-actions">
+        {% if replaces %}<p class="notice"><label><input type="checkbox" name="replace" value="yes" required>
+                Подтверждаю полную замену {% for report in replacements %}{{ report.kind }} за {{ report.month|slice:':7' }}{% if not forloop.last %}, {% endif %}{% endfor %}. Прежние строки этого типа
+                за месяц будут удалены, включая отсутствующие в новом файле.</label></p>{% endif %}
+        <input type="submit" value="Сохранить статистику">
+    </div>
+    {% for section in sections %}
+    <h2>{{ section.report.kind }} · {{ section.report.month|slice:':7' }} · {{ section.report.filename }}</h2>
+    <div class="scroll">
+        <table class="upload-preview{% if section.report.kind == 'AFTN' %} upload-preview-aftn{% endif %}">
+            <colgroup>
+                <col class="upload-spacer">
+                <col class="upload-address">
+                <col class="upload-channel">{% if section.report.kind == 'AFTN' %}
+                <col class="upload-designation">{% endif %}
+                <col class="upload-count">
+                <col class="upload-count">
+                <col class="upload-subscriber">
+                <col class="upload-status">
+                <col class="upload-type">
+                <col class="upload-spacer">
+            </colgroup>
+            <thead>
+                <tr>
+                    <th class="upload-spacer-cell" aria-hidden="true"></th>
+                    <th class="route-address">Адрес</th>
+                    <th>Канал</th>
+                    {% if section.report.kind == 'AFTN' %}
+                    <th class="upload-designation">ПРД</th>
+                    {% endif %}
+                    <th class="numeric">Принято</th>
+                    <th class="numeric">Передано</th>
+                    <th>Абонент</th>
+                    <th class="upload-status-cell" aria-hidden="true"></th>
+                    <th>Категория</th>
+                    <th class="upload-spacer-cell" aria-hidden="true"></th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for item in section.rows %}
+                <tr>
+                    <td class="upload-spacer-cell" aria-hidden="true"></td>
+                    <td class="route-address">
+                        {% if not item.channel and section.report.kind == 'AMHS' %}
+                        <input type="text" name="route_address_{{ item.index }}" value="{{ item.address }}"
+                            maxlength="200" aria-label="Адрес нового AMHS-канала {{ item.row.source_name }}">
+                        {% else %}
+                        {{ item.address }}
+                        {% endif %}
+                    </td>
+                    <td class="upload-channel-name">
+                        {% if item.row.merged %}
+                            {{ item.row.source_name }}
+                        {% elif item.channel %}
+                            {{ item.channel.name }}
+                        {% else %}
+                            {{ item.row.source_name }}
+                        {% endif %}
+                    </td>
+                    {% if section.report.kind == 'AFTN' %}<td class="upload-designation">{{ item.row.designation }}</td>
+                    {% endif %}
+                    <td class="numeric">{{ item.row.received }}</td>
+                    <td class="numeric">{{ item.row.sent }}</td>
+                    <td class="upload-subscriber-value">
+                        {% if item.channel %}
+                        {{ item.channel.subscriber.name }}
+                        {% else %}
+                        <input type="text" name="new_{{ item.index }}" value="{{ item.subscriber_name }}"
+                            list="upload-subscribers" data-subscriber-autocomplete placeholder="Введите имя абонента"
+                            maxlength="200" required aria-label="Абонент для {{ item.row.route_address }}">
+                        {% endif %}
+                    </td>
+                    <td class="upload-status-cell">
+                        {% if not item.channel %}<span class="upload-new-channel" title="Новый канал" role="img"
+                            aria-label="Новый канал" tabindex="0"><img
+                                src="{% static 'traffic_stats/icons/information.svg' %}" width="18" height="18"
+                                alt=""></span>{% endif %}
+                    </td>
+                    <td>
+                        {% if item.channel %}
+                            {% if item.channel.subscriber.category == 'other' %}
+                                Прочие
+                            {% else %}
+                                {{ item.channel.subscriber.get_category_display }}
+                            {% endif %}
+                        {% else %}
+                        <select name="category_{{ item.index }}"
+                            aria-label="Категория абонента для {{ item.row.source_name }}">
+                            {% for key, label in categories %}
+                            <option value="{{ key }}"{% if key == item.selected_category %} selected{% endif %}>
+                                {% if key == 'other' %}Прочие{% else %}{{ label }}{% endif %}
+                            </option>
+                            {% endfor %}
+                        </select>
+                        {% endif %}
+                    </td>
+                    <td class="upload-spacer-cell" aria-hidden="true"></td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+    {% endfor %}
+    <datalist id="upload-subscribers">{% for subscriber in subscribers %}<option value="{{ subscriber.name }}"
+            data-category="{{ subscriber.category }}"></option>{% endfor %}</datalist>
+</form>{% endif %}{% endblock %}

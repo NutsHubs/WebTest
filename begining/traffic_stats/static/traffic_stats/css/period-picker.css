@@ -1,0 +1,73 @@
+/* Only the statistics period picker; other forms keep their own styling. */
+.stats .filters .stats-period-native,
+.stats .filters .stats-period-value {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: flex-end;
+    gap: 8px 16px;
+}
+.stats .filters .stats-period-picker { text-align: left; max-width: 100%; }
+.stats .filters .stats-period-picker > label { margin-bottom: 5px; }
+.stats .filters .stats-period-picker [type=text] { width: 320px; cursor: pointer; }
+.stats .filters .stats-period-picker small { max-width: 420px; margin-top: 5px; }
+.stats .filters .stats-period-picker .period-error { color: var(--error-fg); }
+.stats .filters [hidden] { display: none; }
+.stats-period-calendar {
+    --adp-accent-color: #417690;
+    --adp-cell-background-color-selected: #417690;
+    --adp-cell-background-color-selected-hover: #356278;
+    --adp-cell-background-color-in-range: #e4f2f8;
+    --adp-cell-background-color-in-range-hover: #d5eaf3;
+    --adp-cell-background-color-selected-range: #417690;
+    --adp-cell-background-color-selected-range-hover: #356278;
+    --adp-font-family: "Roboto", "Lucida Grande", Verdana, Arial, sans-serif;
+    --adp-width: 300px;
+}
+@media (max-width: 767px) {
+    .stats .filters .stats-period-picker { width: 100%; }
+    .stats .filters .stats-period-picker [type=text] { width: 100%; min-width: 0; }
+    .stats .filters .stats-period-value { align-items: stretch; }
+    .stats .filters .stats-period-value input { flex: 1 1 220px; }
+}
+
+.stats .filters .period-clear {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    flex: 0 0 32px;
+    width: 32px;
+    min-height: 32px;
+    padding: 0;
+    border: 0;
+    border-radius: 4px;
+    background: transparent;
+    color: #d32f2f;
+    font-size: 28px;
+    line-height: 1;
+    cursor: pointer;
+}
+.stats .filters .period-clear:hover { background: #ffebee; color: #b71c1c; }
+.stats .filters .period-clear:focus-visible { outline: 2px solid #d32f2f; outline-offset: 2px; }
+
+/* Period-only selection lives within the existing black toolbar. */
+.stats #toolbar .toolbar-period {
+    margin: 0; padding: 0; background: #212121; color: #eee;
+    align-items: center; width: auto; min-height: 40px; gap: 5px; box-sizing: border-box;
+}
+.stats #toolbar .toolbar-period .stats-period-picker { display: flex; flex-wrap: wrap; align-items: center; gap: 8px; }
+.stats #toolbar .toolbar-period .stats-period-picker > label { margin: 0; }
+.stats #toolbar .toolbar-period .stats-period-value { align-items: center; }
+.stats #toolbar .toolbar-period #report-period { margin: 0; }
+.stats #toolbar .toolbar-period #report-period-help { display: none; }
+.stats #toolbar .toolbar-period [hidden] { display: none; }
+.stats #toolbar .toolbar-period input[type=submit] { margin: 0; }
+.stats #toolbar .toolbar-period .stats-period-native { align-items: center; }
+.stats #toolbar .toolbar-period .stats-period-native label { flex-direction: row; align-items: center; }
+.stats #toolbar .toolbar-period .stats-period-native small { display: none; }
+.stats #toolbar .toolbar-period .period-error { color: #ffb3b3; }
+@media (max-width: 767px) {
+    .stats #toolbar .toolbar-period .stats-period-picker { width: 100%; }
+    .stats #toolbar .toolbar-period .stats-period-value { flex: 1 1 250px; }
+}
+
+.stats #toolbar .toolbar-period input[type=submit] { height: var(--stats-toolbar-button-height, 35px); box-sizing: border-box; }

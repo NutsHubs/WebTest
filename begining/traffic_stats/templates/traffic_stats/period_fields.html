@@ -1,0 +1,13 @@
+<div class="stats-period-native">
+<label>Месяц / начало периода<input type="month" name="month" value="{{ month }}" required></label>
+<label>Конец периода<input type="month" name="end_month" value="{{ end_month }}"><small>Для одного месяца укажите тот же месяц или оставьте пустым.</small></label>
+</div>
+<div class="stats-period-picker" hidden>
+    {% if not show_period %}<label for="report-period">Период</label>{% endif %}
+    <div class="stats-period-value">
+        <input type="text" id="report-period" aria-label="Период" placeholder="Выберите месяц или диапазон" readonly disabled autocomplete="off" aria-describedby="report-period-help report-period-error">
+        <button class="period-clear" type="button" data-clear-period aria-label="Очистить период" title="Очистить период"><span aria-hidden="true">&times;</span></button>
+    </div>
+    <small id="report-period-help">Один выбранный месяц — месячный отчёт; два — диапазон включительно.</small>
+    <small class="period-error" id="report-period-error" role="alert" hidden></small>
+</div>

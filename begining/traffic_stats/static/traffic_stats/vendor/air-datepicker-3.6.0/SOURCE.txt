@@ -1,0 +1,5 @@
+Air Datepicker 3.6.0
+Source: https://registry.npmjs.org/air-datepicker/-/air-datepicker-3.6.0.tgz
+Integrity: sha512-+txUkqa949rXBJDmkQAIb/GehZECJYF4rm9XJxVYtEX22C9WvBpE/XwCUQZBopKIkpg4ycAySJ9lH3JOg9qQTw==
+Commit: 7031158c6c89b8c95b229748d913aa82639e74e8
+License: https://raw.githubusercontent.com/t1m0n/air-datepicker/7031158c6c89b8c95b229748d913aa82639e74e8/LICENSE.md

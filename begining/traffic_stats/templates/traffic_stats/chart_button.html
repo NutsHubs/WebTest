@@ -1,0 +1,6 @@
+{% load static l10n %}
+<button type="button" class="stat-chart-button" title="График" aria-label="График: {{ chart_label }}"
+        aria-haspopup="dialog" data-chart-scope="{{ chart_scope }}"
+        data-chart-key="{{ chart_key|unlocalize }}" data-chart-label="{{ chart_label }}">
+    <img src="{% static 'traffic_stats/icons/chart.svg' %}" width="18" height="18" alt="">
+</button>

@@ -1,0 +1,63 @@
+{% extends "traffic_stats/base.html" %}
+{% load static %}
+{% block title %}Абоненты и каналы{% endblock %}
+{% block stats_heading %}Абоненты и каналы{% endblock %}
+{% block extrahead %}
+{{ block.super }}
+<script defer src="{% static 'traffic_stats/js/subscriber-suggestions.js' %}?v=4"></script>
+<script defer src="{% static 'traffic_stats/js/directory.js' %}?v=4"></script>
+{% endblock %}
+{% block stats_toolbar %}
+<form method="get" class="directory-search" action="{% url 'traffic_stats:directory' %}" role="search">
+    <input type="text" name="q" value="{{ search }}" aria-label="Поиск по абонентам или каналам" placeholder="Абонент или канал">
+    <input type="hidden" name="sort" value="{{ sort }}">
+    <input type="hidden" name="direction" value="{{ direction }}">
+    <input type="submit" value="Найти">
+</form>
+{% endblock %}
+{% block stats_content %}
+<div class="directory-token" hidden>{% csrf_token %}</div>
+<p class="directory-error error" role="alert" hidden></p>
+<div class="scroll">
+<table class="subscriber-directory">
+    <colgroup><col class="directory-spacer"><col class="directory-address"><col class="directory-channel"><col class="directory-subscriber"><col class="directory-category"><col class="directory-type"><col class="directory-mailing-flag"><col class="directory-mailing-flag"><col class="directory-mailing-addresses"><col class="directory-spacer"></colgroup>
+    <thead>
+        <tr><th rowspan="2" aria-hidden="true"></th><th rowspan="2" aria-sort="{% if sort == 'address' %}{% if direction == 'asc' %}ascending{% else %}descending{% endif %}{% else %}none{% endif %}"><a class="directory-sort" href="{{ address_sort_url }}" title="Сортировать по адресу">Адрес{% if sort == 'address' %}<span aria-hidden="true">{% if direction == 'asc' %}↑{% else %}↓{% endif %}</span>{% endif %}</a></th><th rowspan="2" aria-sort="{% if sort == 'channel' %}{% if direction == 'asc' %}ascending{% else %}descending{% endif %}{% else %}none{% endif %}"><a class="directory-sort" href="{{ channel_sort_url }}" title="Сортировать по каналу">Канал{% if sort == 'channel' %}<span aria-hidden="true">{% if direction == 'asc' %}↑{% else %}↓{% endif %}</span>{% endif %}</a></th><th rowspan="2" aria-sort="{% if sort == 'subscriber' %}{% if direction == 'asc' %}ascending{% else %}descending{% endif %}{% else %}none{% endif %}"><a class="directory-sort" href="{{ subscriber_sort_url }}" title="Сортировать по абоненту">Абонент{% if sort == 'subscriber' %}<span aria-hidden="true">{% if direction == 'asc' %}↑{% else %}↓{% endif %}</span>{% endif %}</a></th><th rowspan="2">Категория</th><th rowspan="2">Тип</th><th colspan="2">Рассылка</th><th rowspan="2">Адрес рассылки</th><th rowspan="2" aria-label="Действия"></th></tr>
+        <tr><th>ПРМ</th><th>ПРД</th></tr>
+    </thead>
+    <tbody>
+    {% for channel in channels %}
+    <tr data-kind="{{ channel.kind }}" data-assign-url="{% url 'traffic_stats:assign_channel' channel.pk %}" data-subscriber-id="{{ channel.subscriber_id }}" data-subscriber-name="{{ channel.subscriber.name }}" data-category="{{ channel.subscriber.category }}" data-route-address="{{ channel.route_address }}" data-mailing-received="{{ channel.mailing_received|yesno:'1,0' }}" data-mailing-sent="{{ channel.mailing_sent|yesno:'1,0' }}" data-mailing-addresses="{{ channel.mailing_addresses }}">
+        <td></td>
+        <td class="directory-address-value">
+            <span class="directory-route-label">{{ channel.route_address }}</span>
+            <div class="directory-editor"><input type="text" data-channel-field="route_address" value="{{ channel.route_address }}" maxlength="200" aria-label="Адрес канала {{ channel.name }}"></div>
+        </td>
+        <td class="directory-channel-name">{{ channel.name }}</td>
+        <td class="directory-subscriber-value">
+            <span class="directory-name">{{ channel.subscriber.name }}</span>
+            <div class="directory-editor"><input type="text" name="subscriber_name_{{ channel.pk }}" value="{{ channel.subscriber.name }}" maxlength="200" list="upload-subscribers" data-subscriber-autocomplete data-edit-existing-category placeholder="Введите имя абонента" aria-label="Абонент канала {{ channel.route_address }}"></div>
+        </td>
+        <td class="directory-category-value">
+            <span class="directory-category-label">{{ channel.subscriber.get_category_display }}</span>
+            <div class="directory-editor"><select name="category_{{ channel.pk }}" aria-label="Категория абонента канала {{ channel.route_address }}">{% for key,label in categories %}<option value="{{ key }}"{% if key == channel.subscriber.category %} selected{% endif %}>{{ label }}</option>{% endfor %}</select></div>
+        </td>
+        <td class="directory-kind">{{ channel.kind }}</td>
+        <td class="directory-mailing"><input type="checkbox" data-channel-field="mailing_received" aria-label="Рассылка ПРМ канала {{ channel.name }}"{% if channel.mailing_received %} checked{% endif %} disabled></td>
+        <td class="directory-mailing"><input type="checkbox" data-channel-field="mailing_sent" aria-label="Рассылка ПРД канала {{ channel.name }}"{% if channel.mailing_sent %} checked{% endif %} disabled></td>
+        <td>
+            <span class="directory-mailing-label">{{ channel.mailing_addresses }}</span>
+            <div class="directory-editor"><input type="text" data-channel-field="mailing_addresses" maxlength="200" value="{{ channel.mailing_addresses }}" aria-label="Адреса рассылки канала {{ channel.name }}"></div>
+        </td>
+        <td class="directory-actions">
+            <button type="button" class="directory-icon directory-edit" title="Редактировать" aria-label="Редактировать абонента канала {{ channel.route_address }}" aria-pressed="false" hidden><img src="{% static 'traffic_stats/icons/edit.png' %}" width="18" height="18" alt=""></button>
+            <button type="button" class="directory-icon directory-save" title="Сохранить" aria-label="Сохранить абонента канала {{ channel.route_address }}" hidden><img src="{% static 'traffic_stats/icons/save.png' %}" width="18" height="18" alt=""></button>
+        </td>
+    </tr>
+    {% empty %}<tr><td colspan="10">{% if search %}По вашему запросу каналы не найдены.{% else %}Нет каналов.{% endif %}</td></tr>{% endfor %}
+    </tbody>
+</table>
+</div>
+<datalist id="upload-subscribers">{% for subscriber in subscribers %}<option value="{{ subscriber.name }}" data-category="{{ subscriber.category }}"></option>{% endfor %}</datalist>
+<p class="stat-icon-credits">Иконки: <a href="https://www.flaticon.com/ru/free-icon/edit_1159633">Kiranshastry / Flaticon</a> · <a href="https://www.flaticon.com/ru/free-icon/check-mark_4226707">значок сохранения — Flaticon</a></p>
+{% endblock %}

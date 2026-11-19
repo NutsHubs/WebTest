@@ -1,0 +1,26 @@
+{% extends "traffic_stats/base.html" %}
+{% load static %}
+{% block title %}Изменить описание{% endblock %}
+{% block stats_heading %}Изменить описание{% endblock %}
+{% block stats_subheading %}{% endblock %}
+{% block extrastyle %}
+{{ block.super }}
+<link rel="stylesheet" href="{% static 'traffic_stats/vendor/jodit-4.20.3/jodit.min.css' %}">
+{% endblock %}
+{% block extrahead %}
+{{ block.super }}
+<script defer src="{% static 'traffic_stats/vendor/jodit-4.20.3/jodit.min.js' %}"></script>
+<script defer src="{% static 'traffic_stats/js/help-editor.js' %}?v=5"></script>
+{% endblock %}
+{% block stats_toolbar %}
+<button type="submit" form="help-edit-form" class="button">Сохранить</button>
+<a class="button" href="{% url 'traffic_stats:help' %}">Отмена</a>
+{% endblock %}
+{% block stats_content %}
+<form id="help-edit-form" method="post" style="max-width: 56rem; margin: 1rem auto; text-align: left;">
+    {% csrf_token %}
+    {% if error %}<p class="error" role="alert">{{ error }}</p>{% endif %}
+    <label for="help-description">Описание (HTML)</label>
+    <textarea id="help-description" name="description" rows="20" style="width: 100%;">{{ description }}</textarea>
+</form>
+{% endblock %}

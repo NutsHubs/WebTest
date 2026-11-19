@@ -1,0 +1,1 @@
+{% extends "traffic_stats/base.html" %}{% block stats_content %}<h1>{{ label }}</h1><p>Изменения названия и привязки применятся также к прошлым месяцам.</p><form method="post">{% csrf_token %}{{ form.as_p }}<button class="button">Сохранить</button></form>{% endblock %}

@@ -1,0 +1,413 @@
+/* Reuse the Collection/Routes dashboard; scope additions to statistics. */
+.stats {
+    width: 100%;
+    min-width: 0;
+}
+
+.stats h1,
+.stats h2,
+.stats>p {
+    text-align: center;
+}
+
+.stats h2 {
+    margin-top: 15px;
+}
+
+.stats nav {
+    display: block;
+    margin: 0;
+}
+
+.stats .filters,
+.stats .stats-upload {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: flex-end;
+    gap: 12px 16px;
+    padding: 10px;
+    margin: 10px 0;
+    background: #212121;
+    color: #eee;
+}
+
+.stats .filters {
+    background: var(--body-bg);
+    color: var(--body-fg);
+}
+
+.stats label {
+    display: block;
+}
+
+.stats .filters label {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+}
+
+.stats .filters small {
+    max-width: 240px;
+}
+
+.stats input,
+.stats select,
+.stats textarea {
+    max-width: 100%;
+    box-sizing: border-box;
+}
+
+.stats input[type=month] {
+    border: 1px solid var(--border-color);
+    border-radius: 4px;
+    padding: 5px 6px;
+    margin-top: 0;
+    color: var(--body-fg);
+    background: var(--body-bg);
+    font: inherit;
+}
+
+.stats input[type=month]:focus {
+    border-color: var(--body-quiet-color);
+}
+
+.stats .filters select[multiple] {
+    min-height: 100px;
+}
+
+.stats .scroll {
+    overflow-x: auto;
+    margin: 10px 0;
+}
+
+.stats table {
+    margin: 10px 0;
+}
+
+.dashboard .stats table th {
+    color: #333;
+}
+
+.dashboard .stats table td {
+    white-space: normal;
+    vertical-align: top;
+}
+
+.dashboard .stats .numeric {
+    text-align: right;
+    white-space: nowrap;
+    font-variant-numeric: tabular-nums;
+}
+
+.stats small {
+    display: block;
+}
+
+.dashboard .stats .total td {
+    background: hsl(44, 100%, 92%);
+    color: #333;
+    font-weight: bold;
+}
+
+.stats .error {
+    background: var(--message-error-bg);
+    color: var(--error-fg);
+    padding: 10px;
+}
+
+.stats .notice {
+    background: var(--message-warning-bg);
+    color: #333;
+    padding: 10px;
+}
+
+.stats form>p {
+    margin: 10px 0;
+}
+
+@media (max-width: 767px) {
+
+    .stats .filters,
+    .stats .stats-upload {
+        align-items: stretch;
+    }
+
+    .stats .filters label {
+        flex: 1 1 180px;
+    }
+
+    .stats .filters small {
+        max-width: none;
+    }
+
+    .stats .stats-upload input[type=file] {
+        width: 100%;
+    }
+}
+
+/* Keep wide tables/forms from widening the page's flex content and title. */
+.stats-page .main>.content {
+    min-width: 0;
+    flex: 1 1 0;
+}
+
+.stats-page #newcontent {
+    width: 100%;
+    min-width: 0;
+    box-sizing: border-box;
+}
+
+.stats-page #content-main {
+    float: none;
+    width: 100%;
+    min-width: 0;
+}
+
+.stats-page .stats-heading {
+    text-align: center;
+    display: block;
+    width: 100%;
+    margin: 0;
+    padding: 10px;
+    box-sizing: border-box;
+}
+/* Navigation links use the same dimensions and typography as Find. */
+.stats nav a.button {
+    display: inline-block;
+    padding: 10px 15px;
+    margin: 2px 0;
+    vertical-align: middle;
+    font-family: "Roboto", "Lucida Grande", Verdana, Arial, sans-serif;
+    font-size: 13px;
+    font-weight: normal;
+    line-height: normal;
+    text-decoration: none;
+}
+
+/* Category reports follow the Routes table palette, only within statistics. */
+.dashboard .stats .category-report { table-layout: fixed; min-width: 40rem; }
+.dashboard .stats .category-report th { width: auto; background: #a7f3d7; }
+.dashboard .stats .category-report .category-title {
+    background: hsl(44, 100%, 92%);
+    text-align: left;
+    font-weight: bold;
+}
+.dashboard .stats .category-report td { border-bottom: 1px solid var(--hairline-color); }
+.dashboard .stats .category-report .subscriber-row { background: #fff; color: #333; }
+.dashboard .stats .category-report .subscriber-summary td { font-weight: bold; }
+.dashboard .stats .category-report .category-total td { background: #DCDEE7; color: #333; font-weight: bold; }
+
+/* The boundary between received and sent is always at 50% of the table. */
+.dashboard .stats .category-report col.name-column,
+.dashboard .stats .category-report col.address-column { width: calc(40% - var(--stats-count-width)); }
+.dashboard .stats .category-report col.count-column { width: var(--stats-count-width); }
+.dashboard .stats .category-report th.count-column,
+.dashboard .stats .category-report td.numeric {
+    white-space: nowrap;
+    word-break: normal;
+}
+
+.dashboard .stats .category-report col.spacer-column { width: 10%; }
+.dashboard .stats .category-report .report-spacer {
+    background: transparent;
+    border: 0;
+    border-bottom: 1px solid var(--hairline-color);
+    padding: 0;
+}
+
+.stats .stat-month-toggle {
+    padding: 0;
+    border: 0;
+    background: transparent;
+    color: inherit;
+    font: inherit;
+    text-align: left;
+    cursor: pointer;
+}
+.stats .stat-month-toggle::before { content: "▸"; display: inline-block; width: 1.2em; }
+.stats .stat-month-toggle[aria-expanded="true"]::before { content: "▾"; }
+.stats .stat-month-toggle:focus-visible { outline: 2px solid #417690; outline-offset: 2px; }
+.dashboard .stats .category-report .stat-month-row .stat-month-label { padding-left: 24px; }
+.dashboard .stats .category-report .stat-month-row[hidden] { display: none; }
+
+.dashboard .stats .category-report .channel-row > td { background: #FFF1E6; color: #333; }
+
+/* Extend heading/total color bands through the otherwise invisible side cells. */
+.dashboard .stats .category-report .column-headings .report-spacer {
+    background: #a7f3d7;
+}
+.dashboard .stats .category-report .category-heading .report-spacer {
+    background: hsl(44, 100%, 92%);
+}
+.dashboard .stats .category-report .category-total .report-spacer {
+    background: #DCDEE7;
+}
+
+.dashboard .stats .category-report .total-label { text-align: right; }
+.dashboard .stats .category-report .route-address { text-align: center; }
+
+/* Same typography as the Collection/Routes thead, repeated for every category. */
+.dashboard .stats .category-report .column-headings th {
+    font-size: 11px;
+    font-weight: 600;
+    line-height: normal;
+    text-transform: uppercase;
+    padding: 5px 10px;
+}
+
+.dashboard .stats .category-report .category-gap td {
+    height: 24px;
+    padding: 0;
+    border: 0;
+    background: #fff;
+}
+
+/* Upload uses the same 40px toolbar and shared submit styling as search. */
+.stats #toolbar .toolbar-upload {
+    margin: 0; padding: 0; min-height: 40px; gap: 5px;
+    align-items: center; background: #212121; color: #eee;
+}
+.stats #toolbar .toolbar-upload > input { margin: 0; }
+.stats #toolbar .toolbar-upload input[type=file] { width: auto; max-width: 100%; }
+
+/* One ungrouped upload table, using the monthly report's palette and headings. */
+.dashboard .stats .upload-preview { width: 100%; table-layout: fixed; min-width: 65rem; --upload-count-width: calc(10ch + 20px); --upload-status-width: 28px; }
+.dashboard .stats .upload-preview col.upload-spacer { width: 10%; }
+.dashboard .stats .upload-preview col.upload-address,
+.dashboard .stats .upload-preview col.upload-channel { width: calc(20% - var(--upload-count-width) / 2); }
+.dashboard .stats .upload-preview col.upload-count { width: var(--upload-count-width); }
+.dashboard .stats .upload-preview col.upload-subscriber { width: calc(20% - var(--upload-count-width) / 2 - var(--upload-status-width) / 2); }
+.dashboard .stats .upload-preview col.upload-type { width: calc(20% - var(--upload-count-width) / 2 - var(--upload-status-width) / 2); }
+.dashboard .stats .upload-preview th { width: auto; background: #a7f3d7; text-align: center; font-size: 11px; font-weight: 600; line-height: normal; text-transform: uppercase; padding: 5px 10px; }
+.dashboard .stats .upload-preview th.numeric { text-align: right; }
+.dashboard .stats .upload-preview td { border-bottom: 1px solid var(--hairline-color); vertical-align: middle; }
+.dashboard .stats .upload-preview .route-address { text-align: right; }
+.dashboard .stats .upload-preview .numeric { white-space: nowrap; word-break: normal; }
+.dashboard .stats .upload-preview input[type=text],
+.dashboard .stats .upload-preview select { width: 100%; margin: 0; }
+
+/* Upload subscriber suggestions are positioned outside the scrolling table. */
+.stats-subscriber-suggestions { position: fixed; z-index: 2000; overflow-y: auto; box-sizing: border-box; background: var(--body-bg); color: var(--body-fg); border: 1px solid var(--border-color); border-radius: 4px; box-shadow: 0 4px 12px #0003; }
+.stats-subscriber-suggestions[hidden] { display: none; }
+.stats-subscriber-suggestions [role=option] { padding: 7px 10px; cursor: pointer; overflow-wrap: anywhere; }
+.stats-subscriber-suggestions [role=option]:hover,
+.stats-subscriber-suggestions [aria-selected=true] { background: var(--primary); color: var(--button-fg); }
+
+/* Channel directory follows the report table and existing search toolbar. */
+.stats #toolbar .directory-search { display: flex; flex-wrap: wrap; align-items: center; justify-content: center; gap: 5px; min-height: 40px; margin: 0; padding: 0; }
+.stats #toolbar .directory-search input { margin: 0; }
+.stats #toolbar .directory-search input[type=text] { width: 320px; max-width: 100%; }
+.dashboard .stats .subscriber-directory { width: 100%; min-width: 90rem; table-layout: fixed; --directory-mailing-width: calc(28ch + 40px); }
+.dashboard .stats .subscriber-directory col.directory-spacer { width: calc(18% - var(--directory-mailing-width) / 2); }
+.dashboard .stats .subscriber-directory col.directory-channel { width: 12%; }
+.dashboard .stats .subscriber-directory col.directory-address { width: 14%; }
+.dashboard .stats .subscriber-directory col.directory-subscriber { width: 10%; }
+.dashboard .stats .subscriber-directory col.directory-category { width: 13%; }
+.dashboard .stats .subscriber-directory col.directory-type { width: 7%; }
+.dashboard .stats .subscriber-directory col.directory-mailing-flag { width: 4%; }
+.dashboard .stats .subscriber-directory col.directory-mailing-addresses { width: var(--directory-mailing-width); }
+.dashboard .stats .subscriber-directory th { width: auto; background: #a7f3d7; text-align: center; font-size: 11px; font-weight: 600; line-height: normal; text-transform: uppercase; padding: 5px 10px; }
+.dashboard .stats .subscriber-directory td { border-bottom: 1px solid var(--hairline-color); vertical-align: middle; }
+.stats .subscriber-directory .directory-address-value,
+.stats .subscriber-directory .directory-category-value,
+.stats .subscriber-directory .directory-kind { text-align: center; }
+.stats .subscriber-directory .directory-editor { display: none; }
+.stats .subscriber-directory .is-editing .directory-editor { display: block; }
+.stats .subscriber-directory .is-editing .directory-name,
+.stats .subscriber-directory .is-editing .directory-category-label { display: none; }
+.stats .subscriber-directory .directory-editor input,
+.stats .subscriber-directory .directory-editor select { width: 100%; margin: 0; }
+.stats .subscriber-directory .directory-actions { padding: 0 8px; white-space: nowrap; text-align: left; }
+.stats .directory-icon { display: inline-flex; align-items: center; justify-content: center; padding: 4px; border: 0; border-radius: 3px; background: transparent; vertical-align: middle; cursor: pointer; }
+.stats .directory-icon img { display: block; }
+.stats .directory-icon:hover { background: #dce6f0; }
+.stats .directory-icon:focus-visible { outline: 2px solid #417690; }
+.stats .directory-icon:disabled { opacity: .5; cursor: default; }
+.stats .directory-icon[aria-pressed=true] { background: #cddce6; }
+.stats .subscriber-directory [hidden], .stats .directory-error[hidden] { display: none; }
+.stats .stat-icon-credits { font-size: 10px; color: var(--body-quiet-color); }
+
+/* Preserve full-width header fill and row rules through the empty side cells. */
+.dashboard .stats .upload-preview .upload-spacer-cell { padding: 0; }
+.dashboard .stats .upload-preview td.upload-spacer-cell { background: transparent; }
+
+.dashboard .stats .upload-preview .upload-subscriber-value,
+.dashboard .stats .upload-preview .upload-subscriber-value input { text-align: right; }
+
+.dashboard .stats .upload-preview col.upload-status { width: var(--upload-status-width); }
+.dashboard .stats .upload-preview .upload-status-cell { padding: 0; text-align: center; }
+.stats .upload-new-channel { display: inline-flex; align-items: center; justify-content: center; padding: 4px; vertical-align: middle; }
+.stats .upload-new-channel img { display: block; }
+.stats .upload-new-channel:focus-visible { outline: 2px solid #417690; }
+
+/* Saving statistics confirms with an overlay instead of shifting the report. */
+.stats-page .stats-toast { position: fixed; top: 20px; left: 50%; transform: translateX(-50%); z-index: 3000; display: flex; align-items: center; gap: 16px; max-width: calc(100vw - 40px); box-sizing: border-box; padding: 12px 14px; border: 1px solid #b8dbbf; border-radius: 6px; background: #edf8ef; color: #224b2a; box-shadow: 0 4px 16px #0003; transition: opacity .2s, transform .2s; }
+.stats-page .stats-toast .stats-toast-close { margin: 0; padding: 0; width: 24px; height: 24px; flex-shrink: 0; border: 0; background: transparent; color: inherit; font-size: 24px; line-height: 1; cursor: pointer; }
+.stats-page .stats-toast .stats-toast-close:focus-visible { outline: 2px solid currentColor; }
+.stats-page .stats-toast.is-closing { opacity: 0; transform: translate(-50%, -8px); pointer-events: none; }
+@media (prefers-reduced-motion: reduce) { .stats-page .stats-toast { transition: none; } }
+
+.stats .subscriber-directory .directory-sort { display: inline-flex; align-items: center; justify-content: center; gap: 5px; color: inherit; font: inherit; text-decoration: none; }
+.stats .subscriber-directory .directory-sort:hover { text-decoration: underline; }
+.stats .subscriber-directory .directory-sort:focus-visible { outline: 2px solid #417690; outline-offset: 3px; }
+
+/* Monthly report actions use the same button style as the statistics toolbar. */
+.stats { --stats-toolbar-button-height: 35px; }
+.stats .stats-report-heading { margin: 15px 0 10px; text-align: center; }
+.stats .stats-report-heading h2 { margin: 0; }
+.stats .stats-report-actions { display: flex; justify-content: center; flex-wrap: wrap; gap: 10px; margin-top: 10px; }
+.stats .stats-print-menu { position: relative; }
+.stats .stats-print-menu > summary,
+.stats .stats-period-action {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 7px;
+    height: var(--stats-toolbar-button-height);
+    box-sizing: border-box;
+    list-style: none;
+    font-family: "Roboto", "Lucida Grande", Verdana, Arial, sans-serif;
+    font-size: 13px;
+    font-weight: normal;
+    line-height: normal;
+}
+.stats a.stats-period-action { padding: 10px 15px; text-decoration: none; }
+.stats .stats-print-menu > summary::-webkit-details-marker { display: none; }
+.stats .stats-print-menu > summary img,
+.stats .stats-period-action img { display: block; filter: brightness(0) invert(1); }
+.stats .stats-print-menu > summary:focus-visible,
+.stats .stats-period-action:focus-visible { outline: 2px solid #417690; outline-offset: 3px; }
+.stats .stats-print-options { position: absolute; top: 100%; left: 0; right: auto; z-index: 1100; min-width: 220px; max-width: calc(100vw - 32px); box-sizing: border-box; margin: 0; padding: 6px 0; list-style: none; background: var(--body-bg); border: 1px solid var(--border-color); border-radius: 4px; box-shadow: 0 4px 12px #0003; text-align: left; }
+@media (max-width: 450px) {
+    .stats .stats-download-menu .stats-print-options { left: auto; right: 0; }
+}
+.stats .stats-print-options li { margin: 0; padding: 0; list-style: none; }
+
+.stats .stats-print-options a { display: block; box-sizing: border-box; width: 100%; padding: 9px 14px; color: var(--body-fg); font: inherit; text-align: left; text-decoration: none; }
+.stats .stats-print-options a:hover { background: var(--darkened-bg); }
+.stats .stats-print-options a:focus-visible { outline: 2px solid #417690; outline-offset: -2px; }
+
+.stats .subscriber-directory .is-editing .directory-route-label,
+.stats .subscriber-directory .is-editing .directory-mailing-label { display: none; }
+.stats .subscriber-directory .directory-mailing { text-align: center; }
+.stats .subscriber-directory .directory-mailing input[type=checkbox] { margin: 0; width: auto; }
+.stats .subscriber-directory .directory-mailing-label { white-space: pre-wrap; overflow-wrap: anywhere; }
+
+
+.stats .subscriber-directory .directory-subscriber-value,
+.stats .subscriber-directory .directory-subscriber-value input { text-align: right; }
+.stats .subscriber-directory .directory-address-value input { text-align: right; }
+.stats .subscriber-directory .directory-channel-name { text-align: center; }
+.stats .subscriber-directory .directory-category-value select { text-align: center; text-align-last: center; }
+.stats .upload-preview .route-address input { text-align: right; }
+.stats .upload-preview .upload-channel-name { text-align: center; }
+
+/* AFTN upload: transmission designation occupies its own centered column. */
+.dashboard .stats .upload-preview col.upload-designation { width: 6rem; }
+.dashboard .stats .upload-preview .upload-designation { text-align: center; }
+.dashboard .stats .upload-preview-aftn col.upload-spacer { width: calc(10% - 3rem); }
+
+.stats .stats-paste-input { width: min(64rem, 100%); margin: 1rem auto; text-align: left; }
+.stats .stats-paste-input label { display: block; margin-bottom: .4rem; }
+.stats .stats-paste-input textarea { display: block; width: 100%; box-sizing: border-box; resize: vertical; }

@@ -15,3 +15,10 @@ begining/begining/__pycache__/
 begining/aftn_national/__pycache__/
 begining/db.sqlite3
 lib/
+
+# Local statistics development
+backups/
+.codex-deps/
+**/__pycache__/
+/work/
+/outputs/

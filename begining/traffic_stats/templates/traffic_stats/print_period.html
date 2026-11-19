@@ -1,0 +1,48 @@
+{% extends "traffic_stats/print_sheet.html" %}
+{% block title %}{{ report_title }}{% endblock %}
+{% block page_rules %}@page { size: A4 landscape; margin: 10mm; }{% endblock %}
+{% block print_styles %}
+    .period-print { box-sizing: border-box; width: min(100%, 1050px); font-size: 11pt; }
+    .period-print h1 { margin: 0 0 12px; font-size: 16pt; text-align: center; }
+    .period-print table { width: 100%; margin-bottom: 14px; }
+    .period-print th, .period-print td { border: 1px solid #aaa; padding: 4px 6px; overflow-wrap: anywhere; }
+    .period-print thead { display: table-header-group; }
+    .period-print thead tr:first-child th { background: #fff4d6; text-align: left; }
+    .period-print .period-total { background: #dcdee7; font-weight: bold; }
+    .period-print .period-number { text-align: right; font-variant-numeric: tabular-nums; }
+    @media print {
+        .period-print { width: 100%; }
+        .period-print thead { break-inside: avoid; }
+    }
+{% endblock %}
+{% block print_content %}
+<main class="print-sheet period-print">
+    <h1>{{ report_title }}</h1>
+    {% for section in category_sections %}
+    <table>
+        <colgroup><col style="width: 44%"><col style="width: 14%"><col style="width: 14%"><col style="width: 28%"></colgroup>
+        <thead>
+            <tr><th colspan="4">{{ section.title }}</th></tr>
+            <tr>
+                <th scope="col">{{ section.first_column }}</th><th scope="col">Принято</th>
+                <th scope="col">Передано</th><th scope="col">Канал</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for entry in section.subscribers %}
+            <tr>
+                <td>{{ entry.subscriber.name }}</td><td class="period-number">{{ entry.received }}</td>
+                <td class="period-number">{{ entry.sent }}</td><td>{{ entry.address }}</td>
+            </tr>
+            {% endfor %}
+            <tr class="period-total">
+                <td>Итого</td><td class="period-number">{{ section.totals.received }}</td>
+                <td class="period-number">{{ section.totals.sent }}</td><td></td>
+            </tr>
+        </tbody>
+    </table>
+    {% empty %}
+    <p>Нет данных для выбранных фильтров.</p>
+    {% endfor %}
+</main>
+{% endblock %}

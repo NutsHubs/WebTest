@@ -1,0 +1,12 @@
+{% extends "traffic_stats/base.html" %}
+{% block title %}Помощь по заполнению{% endblock %}
+{% block stats_heading %}Помощь по заполнению{% endblock %}
+{% block stats_subheading %}{% endblock %}
+{% block stats_toolbar %}
+<a class="button" href="{% url 'traffic_stats:help_edit' %}">Изменить описание</a>
+{% endblock %}
+{% block stats_content %}
+<section style="max-width: 56rem; margin: 1rem auto; text-align: left;">
+    {{ description }}
+</section>
+{% endblock %}

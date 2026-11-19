@@ -1,7 +1,8 @@
 {% extends "base_site.html" %}
 {% load i18n static %}
 
-{% block extrastyle %}{{ block.super }}<link rel="stylesheet" type="text/css" href="{% static '/aftn_national/css/dashboard.css' %}">{% endblock %}
+{% block extrastyle %}{{ block.super }}
+<link rel="stylesheet" type="text/css" href="{% static '/aftn_national/css/dashboard.css' %}">{% endblock %}
 
 {% block coltype %}colMS{% endblock %}
 
@@ -13,60 +14,62 @@
 
 {% block content %}
 <div id="content-main">
-  <div id="search-content" align="center">
-      <h1 style="padding:10px;margin:0px">Поиск по буквенному обозначению по всему сборнику</h1>
-      <h5 style="padding:10px;margin:0px">(Последняя {{ corr_latest }})</h5>
-      <div class="toolbar" id="toolbar">
-          <form id="list-search" method="get">
-              <div align="center">
-                <input type="text" name="q" id="search" value="{{ search }}" autofocus>
-                <input type="submit" value="Найти">
-              </div>
-          </form>
-      </div>
-      <div class="results" style="display:initial">
-          {% for key,values in results.items %}
-          {% if values %}
-          <h2 style="margin-top:15px"><b>{{ key }}</b></h2>
-          <table id="result-list" style="width:100%">
-              <thead>
-              <tr>
-                  {% for header in results_headers|get_item:key %}
-                  <th style="padding:5;background-color:#a7f3d7;">{{ header }}</th>
-                  {% endfor %}
-              </tr>
-              </thead>
-              {% for value in values %}
-              <tr>
-                  {% if value.national %}
-                  <td style="width:40px;text-align:center">{{ value.national }}</td>
-                  {% elif value.replaced_aftn %}
-                  <td style="width:180px;text-align:left">{{ value.replaced_aftn }}</td>
-                  {% else %}
-                  <td style="width:40px;text-align:center"></td>
-                  {% endif %}
-                  {% if value.international %}
-                  <td style="width:40px">{{ value.international }}</td>
-                  {% elif value.new_aftn%}
-                  <td style="width:180px">{{ value.new_aftn }}</td>
-                  {% else %}
-                  <td style="width:40px"></td>
-                  {% endif %}
-                  <td style="width:10px">{% if value.marked %}*{% endif %}</td>
-                  <td style="width:65px">{% if value.excluded %}исключен{% endif %}</td>
-                  <td>{{ value.name }}</td>
-                  <td style="width:120px">
-                      {% if value.location %}{{ value.location }}{% endif %}
-                      {% if value.district_administration %}{{ value.district_administration }}{% endif %}
-                      {{ value.com_center }}
-                  </td>
-                  <td style="width:250px">{% if value.correction is not None %}{{ value.correction }}{% endif %}</td>
-              </tr>
-          {% endfor %}
-          </table>
-          {% endif %}
-          {% endfor %}
-      </div>
-  </div>
+    <div id="search-content" align="center">
+        <div class="page-heading">
+            <h1>Поиск по буквенному обозначению по всему сборнику</h1>
+            <h5>(Последняя {{ corr_latest }})</h5>
+        </div>
+        <form id="list-search" method="get">
+            <div class="toolbar" align="center">
+                <div id="toolbar">
+                    <input type="text" name="q" id="search" value="{{ search }}" autofocus>
+                    <input type="submit" value="Найти">
+                </div>
+            </div>
+        </form>
+        <div class="results" style="display:initial">
+            {% for key,values in results.items %}
+            {% if values %}
+            <h2 style="margin-top:15px"><b>{{ key }}</b></h2>
+            <table id="result-list" style="width:100%">
+                <thead>
+                    <tr>
+                        {% for header in results_headers|get_item:key %}
+                        <th style="padding:5;background-color:#a7f3d7;">{{ header }}</th>
+                        {% endfor %}
+                    </tr>
+                </thead>
+                {% for value in values %}
+                <tr>
+                    {% if value.national %}
+                    <td style="width:40px;text-align:center">{{ value.national }}</td>
+                    {% elif value.replaced_aftn %}
+                    <td style="width:180px;text-align:left">{{ value.replaced_aftn }}</td>
+                    {% else %}
+                    <td style="width:40px;text-align:center"></td>
+                    {% endif %}
+                    {% if value.international %}
+                    <td style="width:40px">{{ value.international }}</td>
+                    {% elif value.new_aftn%}
+                    <td style="width:180px">{{ value.new_aftn }}</td>
+                    {% else %}
+                    <td style="width:40px"></td>
+                    {% endif %}
+                    <td style="width:10px">{% if value.marked %}*{% endif %}</td>
+                    <td style="width:65px">{% if value.excluded %}исключен{% endif %}</td>
+                    <td>{{ value.name }}</td>
+                    <td style="width:120px">
+                        {% if value.location %}{{ value.location }}{% endif %}
+                        {% if value.district_administration %}{{ value.district_administration }}{% endif %}
+                        {{ value.com_center }}
+                    </td>
+                    <td style="width:250px">{% if value.correction is not None %}{{ value.correction }}{% endif %}</td>
+                </tr>
+                {% endfor %}
+            </table>
+            {% endif %}
+            {% endfor %}
+        </div>
+    </div>
 </div>
 {% endblock %}

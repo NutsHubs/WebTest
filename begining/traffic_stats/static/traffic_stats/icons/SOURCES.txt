@@ -1,0 +1,33 @@
+Edit: https://www.flaticon.com/ru/free-icon/edit_1159633
+Author: Kiranshastry (Flaticon). Attribution link is displayed below reports.
+Save: https://www.flaticon.com/ru/free-icon/check-mark_4226707
+PNG: https://cdn-icons-png.flaticon.com/512/4226/4226707.png
+Source attribution link is displayed below reports.
+
+Undo: https://www.flaticon.com/ru/free-icon/undo_6066724
+PNG: https://cdn-icons-png.flaticon.com/512/6066/6066724.png
+Source attribution link is displayed below reports.
+
+Information: information.svg is locally drawn for this project.
+Requested reference: https://www.flaticon.com/ru/free-icon/information_3772153
+The referenced asset could not be downloaded; it is not included.
+
+Print: https://www.flaticon.com/ru/free-icon/print_6066607
+PNG: https://cdn-icons-png.flaticon.com/512/6066/6066607.png
+Source attribution link is displayed below reports.
+
+Download: https://www.flaticon.com/ru/free-icon/download_5890036
+PNG: https://cdn-icons-png.flaticon.com/512/5890/5890036.png
+Source attribution link is displayed below reports.
+
+Active download icon: Bootstrap Icons box-arrow-down
+Source: https://icons.getbootstrap.com/icons/box-arrow-down/
+SVG: https://icons.getbootstrap.com/assets/icons/box-arrow-down.svg
+License: MIT; local copy bootstrap-icons-LICENSE.txt
+Replaces the previously used Flaticon download PNG.
+
+Active print icon: Bootstrap Icons printer
+Source: https://icons.getbootstrap.com/icons/printer/
+SVG: https://icons.getbootstrap.com/assets/icons/printer.svg
+License: MIT; local copy bootstrap-icons-LICENSE.txt
+Replaces the previously used Flaticon print PNG.

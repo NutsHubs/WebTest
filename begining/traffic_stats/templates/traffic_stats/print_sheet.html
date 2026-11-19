@@ -1,0 +1,48 @@
+{% load static l10n %}{% localize off %}<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>{% block title %}{{ title }}{% endblock %}</title>
+<style>
+    {% block page_rules %}
+    {% for sheet in sheets %}
+    @page stats_sheet_{{ forloop.counter }} { size: {{ sheet.page_size }}; margin: {{ sheet.margins }}; }
+    {% endfor %}
+    {% endblock %}
+    body { margin: 0; color: #000; background: #eee; font-family: Arial, sans-serif; }
+    .print-controls { padding: 12px; text-align: center; }
+    .print-controls button { padding: 8px 20px; cursor: pointer; }
+    .print-sheet { margin: 16px auto; padding: 16px; width: max-content; background: white; }
+    table { border-collapse: collapse; table-layout: fixed; }
+    td { box-sizing: border-box; padding: 0 2pt; }
+    tr { break-inside: avoid; page-break-inside: avoid; }
+    [hidden] { display: none; }
+    @media print {
+        body { background: white; }
+        .print-controls { display: none; }
+        .print-sheet { margin: 0; padding: 0; }
+        .print-sheet + .print-sheet { break-before: page; page-break-before: always; }
+        * { print-color-adjust: exact; -webkit-print-color-adjust: exact; }
+    }
+    {% block print_styles %}{% endblock %}
+</style>
+<script defer src="{% static 'traffic_stats/js/print-sheet.js' %}"></script>
+</head>
+<body>
+<div class="print-controls"><button type="button" data-print-sheet>Печать</button></div>
+{% block print_content %}
+{% for sheet in sheets %}
+<main class="print-sheet" aria-label="Лист {{ sheet.sheet_label }}" style="page:stats_sheet_{{ forloop.counter }}">
+<table style="width:{{ sheet.table_width }}pt">
+<colgroup>{% for column in sheet.columns %}<col style="width:{{ column.width }}pt"{% if column.hidden %} hidden{% endif %}>{% endfor %}</colgroup>
+<tbody>{% for row in sheet.rows %}
+<tr style="height:{{ row.height }}pt">{% for cell in row.cells %}<td style="{{ cell.style }}" rowspan="{{ cell.rowspan }}" colspan="{{ cell.colspan }}"{% if cell.hidden %} hidden{% endif %}>{{ cell.value }}</td>{% endfor %}</tr>
+{% endfor %}</tbody>
+</table>
+</main>
+{% endfor %}
+{% endblock %}
+</body>
+</html>
+{% endlocalize %}
