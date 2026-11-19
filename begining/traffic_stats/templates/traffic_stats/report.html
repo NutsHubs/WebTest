@@ -4,7 +4,7 @@
 {{ block.super }}
 {% if show_period %}
 <link rel="stylesheet" href="{% static 'traffic_stats/vendor/air-datepicker-3.6.0/air-datepicker.css' %}">
-<link rel="stylesheet" href="{% static 'traffic_stats/css/period-picker.css' %}?v=5">
+<link rel="stylesheet" href="{% static 'traffic_stats/css/period-picker.css' %}?v=6">
 {% endif %}
 {% if report_requested %}<link rel="stylesheet" href="{% static 'traffic_stats/css/corrections.css' %}?v=7">{% endif %}
 {% if show_chart and category_sections %}
@@ -114,7 +114,6 @@
 </table>
 </div>
 {% if show_chart %}{% include 'traffic_stats/report_chart.html' %}{% endif %}
-<p class="stat-icon-credits">Иконки: <a href="https://www.flaticon.com/ru/free-icon/edit_1159633">Kiranshastry / Flaticon</a> · <a href="https://www.flaticon.com/ru/free-icon/check-mark_4226707">значок сохранения — Flaticon</a> · <a href="https://www.flaticon.com/ru/free-icon/undo_6066724">значок возврата — Flaticon</a> · <a href="https://icons.getbootstrap.com/icons/printer/">печать — Bootstrap Icons</a> · <a href="https://icons.getbootstrap.com/icons/box-arrow-down/">скачивание — Bootstrap Icons</a></p>
 {% elif latest_statistics %}<p>Нет данных для выбранных фильтров.</p>{% endif %}
 {% endif %}
 {% endblock %}
